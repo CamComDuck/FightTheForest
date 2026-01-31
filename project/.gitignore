@@ -5,3 +5,5 @@
 *.jpg
 *.jpeg
 *.otf
+/godot_state_charts_examples/
+/addons/

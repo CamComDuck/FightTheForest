@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ubmipsi74xrh"]
+
+[ext_resource type="Script" uid="uid://bi28t4hht1hbs" path="res://input/keybinds.gd" id="1_oxfeg"]
+[ext_resource type="Script" uid="uid://c3usi265to510" path="res://input/character_body_2d.gd" id="2_weyb2"]
+
+[node name="Keybinds" type="Node2D" unique_id=393991047]
+script = ExtResource("1_oxfeg")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1709157144]
+script = ExtResource("2_weyb2")

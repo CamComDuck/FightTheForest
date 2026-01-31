@@ -1,20 +1,38 @@
 [gd_scene format=3 uid="uid://o4ymgjw4x2hx"]
 
+[ext_resource type="Script" uid="uid://ssuwdgopeb3f" path="res://fight/fight.gd" id="1_0cvpa"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="1_6ogfw"]
 [ext_resource type="PackedScene" uid="uid://6wlo13b8vqqw" path="res://moth/moth.tscn" id="1_akaej"]
 [ext_resource type="Texture2D" uid="uid://bcasm2qhk108q" path="res://fight/background.png" id="1_wldmm"]
+[ext_resource type="PackedScene" uid="uid://ubmipsi74xrh" path="res://input/keybinds.tscn" id="2_vdykp"]
 [ext_resource type="Texture2D" uid="uid://c2umoqnrswm6j" path="res://UI/labelVertical.png" id="2_yw3gg"]
 [ext_resource type="Texture2D" uid="uid://degurbvxsw5mf" path="res://UI/labelHorizontal.png" id="3_1ybsv"]
 [ext_resource type="Theme" uid="uid://c1ideykdfrqst" path="res://UI/primaryTheme.tres" id="3_b28lu"]
+[ext_resource type="PackedScene" uid="uid://3uylcggns17x" path="res://threat/threat.tscn" id="4_4wrhi"]
 [ext_resource type="Texture2D" uid="uid://c77amhgf26gaa" path="res://UI/button wider clicked.png" id="5_akaej"]
 [ext_resource type="Texture2D" uid="uid://deysuaw8favcb" path="res://UI/button wider hover.png" id="6_7xocg"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="10_dsfgu"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="11_vdykp"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_6ogfw"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="14_6ogfw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k0y55"]
 
 [node name="Fight" type="Node2D" unique_id=2011946084]
+script = ExtResource("1_0cvpa")
 
-[node name="Moth" parent="." unique_id=46280394 instance=ExtResource("1_akaej")]
-position = Vector2(608, 513)
-flip_h = true
+[node name="StateChartDebugger" parent="." unique_id=599595517 instance=ExtResource("1_6ogfw")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 500.0
+offset_bottom = 500.0
+grow_horizontal = 1
+grow_vertical = 1
+initial_node_to_watch = NodePath("../StateChart")
+
+[node name="Keybinds" parent="." unique_id=393991047 instance=ExtResource("2_vdykp")]
+unique_name_in_owner = true
 
 [node name="Background" type="Sprite2D" parent="." unique_id=674374200]
 z_index = -100
@@ -23,6 +41,15 @@ scale = Vector2(1.0444444, 1.0444444)
 texture = ExtResource("1_wldmm")
 centered = false
 metadata/_edit_lock_ = true
+
+[node name="Moth" parent="." unique_id=46280394 instance=ExtResource("1_akaej")]
+unique_name_in_owner = true
+position = Vector2(511, 513)
+flip_h = true
+
+[node name="Threat" parent="." unique_id=480288523 instance=ExtResource("4_4wrhi")]
+unique_name_in_owner = true
+position = Vector2(1403, 533)
 
 [node name="UI" type="Control" parent="." unique_id=779417414]
 layout_mode = 3
@@ -113,9 +140,9 @@ vertical_alignment = 1
 
 [node name="HealthBars" type="MarginContainer" parent="UI/PanelContainer" unique_id=521131973]
 layout_mode = 2
-theme_override_constants/margin_left = 100
+theme_override_constants/margin_left = 200
 theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 100
+theme_override_constants/margin_right = 200
 theme_override_constants/margin_bottom = 50
 
 [node name="HealthLeft" type="TextureProgressBar" parent="UI/PanelContainer/HealthBars" unique_id=1557233360]
@@ -133,3 +160,39 @@ size_flags_vertical = 8
 value = 83.0
 texture_under = ExtResource("5_akaej")
 texture_progress = ExtResource("6_7xocg")
+
+[node name="StateChart" type="Node" parent="." unique_id=553309202]
+unique_name_in_owner = true
+script = ExtResource("10_dsfgu")
+track_in_editor = true
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="CompoundState" type="Node" parent="StateChart" unique_id=2123837378]
+script = ExtResource("11_vdykp")
+initial_state = NodePath("PlayerTurn")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="PlayerTurn" type="Node" parent="StateChart/CompoundState" unique_id=381439265]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnPlayerPickedMove" type="Node" parent="StateChart/CompoundState/PlayerTurn" unique_id=480279074]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../ThreatTurn")
+event = &"OnPlayerPickedMove"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="ThreatTurn" type="Node" parent="StateChart/CompoundState" unique_id=1084717329]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnPlayerPickedMove" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=1644826683]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../PlayerTurn")
+delay_in_seconds = "1.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[connection signal="state_entered" from="StateChart/CompoundState/PlayerTurn" to="." method="_on_player_turn_state_entered"]
+[connection signal="state_processing" from="StateChart/CompoundState/PlayerTurn" to="." method="_on_player_turn_state_processing"]
+[connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn" to="." method="_on_threat_turn_state_entered"]
