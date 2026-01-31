@@ -17,21 +17,20 @@ func isTweenRunning() -> bool:
 
 
 func startSpinAnim() -> void:
-    currentTween = create_tween().set_parallel().set_trans(Tween.TRANS_BACK)
+    currentTween = create_tween().set_trans(Tween.TRANS_BACK)
     var startRotation := self.rotation
-
     var spinFinalPosition := 360.0
 	
     currentTween.tween_property(self, "rotation_degrees", spinFinalPosition, 1.0)
 
     await currentTween.finished
-
     self.rotation = startRotation
+
     onTweenFinished.emit()
 
 
 func startWrapAnim(threatPosition: Vector2) -> void:
-    currentTween = create_tween().set_parallel().set_trans(Tween.TRANS_BACK)
+    currentTween = create_tween().set_trans(Tween.TRANS_BACK)
     var startRotation := self.rotation
     var startPosition := self.position
     var spinFinalPosition := 360.0
@@ -39,13 +38,13 @@ func startWrapAnim(threatPosition: Vector2) -> void:
     currentTween.tween_property(self, "global_position", threatPosition, 1.0)
     await currentTween.finished
 
-    currentTween = create_tween().set_parallel().set_trans(Tween.TRANS_BACK)
+    currentTween = create_tween().set_trans(Tween.TRANS_BACK)
     currentTween.tween_property(self, "rotation_degrees", spinFinalPosition, 1.0)
     await currentTween.finished
     self.rotation = startRotation
     self.flip_h = not self.flip_h
 
-    currentTween = create_tween().set_parallel().set_trans(Tween.TRANS_BACK)
+    currentTween = create_tween().set_trans(Tween.TRANS_BACK)
     currentTween.tween_property(self, "global_position", startPosition, 1.0)
     await currentTween.finished
     self.flip_h = not self.flip_h
@@ -55,6 +54,17 @@ func startWrapAnim(threatPosition: Vector2) -> void:
 
 func setIsMasked(newMasked: bool) -> void:
     isMasked = newMasked
+    currentTween = create_tween().set_trans(Tween.TRANS_LINEAR)
+    var modulateFinal : Color
+    print(isMasked)
+    if isMasked:
+        modulateFinal = Color(1.0, 1.0, 1.0, 0.5)
+    else:
+        modulateFinal = Color(1.0, 1.0, 1.0, 1.0)
+        
+    currentTween.tween_property(self, "modulate", modulateFinal, 1.0)
+    await currentTween.finished
+    onTweenFinished.emit()
 
 
 func getHealth() -> int:
@@ -76,6 +86,9 @@ func incrementHealth(inc: int) -> void:
         
 
 func incrementBurnRounds(inc: int) -> void:
+    if isMasked:
+        return
+        
     burnRoundsLeft += inc
     if burnRoundsLeft < 0:
         burnRoundsLeft = 0

@@ -177,6 +177,22 @@ value = 9.0
 texture_under = ExtResource("5_akaej")
 texture_progress = ExtResource("6_7xocg")
 
+[node name="MothFireTracker" type="HBoxContainer" parent="FightUI" unique_id=168385547]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 185.0
+offset_top = 112.0
+offset_right = 389.0
+offset_bottom = 212.0
+
+[node name="ThreatFireTracker" type="HBoxContainer" parent="FightUI" unique_id=417597753]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1139.0
+offset_top = 112.0
+offset_right = 1343.0
+offset_bottom = 212.0
+
 [node name="StateChart" type="Node" parent="." unique_id=553309202]
 unique_name_in_owner = true
 script = ExtResource("10_dsfgu")

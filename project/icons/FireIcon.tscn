@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ddextv6t4ch6c"]
+
+[ext_resource type="Texture2D" uid="uid://dj6hb78dfc7rh" path="res://icons/fire_small.png" id="1_gta8j"]
+
+[node name="FireIcon" type="TextureRect" unique_id=1412183477]
+texture = ExtResource("1_gta8j")

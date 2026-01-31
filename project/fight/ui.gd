@@ -14,6 +14,11 @@ signal onTweenFinished()
 @onready var healthBarMoth:TextureProgressBar = %HealthBarMoth as TextureProgressBar
 @onready var healthBarThreat:TextureProgressBar = %HealthBarThreat as TextureProgressBar
 
+@onready var mothFireTracker:HBoxContainer = %MothFireTracker as HBoxContainer
+@onready var threatFireTracker:HBoxContainer = %ThreatFireTracker as HBoxContainer
+
+@onready var fireIcon:PackedScene = preload("res://icons/FireIcon.tscn")
+
 const transition := Tween.TRANS_BACK
 const moveAmount := 60.0
 const normDuration := .5
@@ -32,7 +37,37 @@ func _ready():
 
 func isTweenRunning() -> bool:
 	return tweenControls and tweenControls.is_running()
+
+
+func addFireMoth(inc: int) -> void:
+	for i in inc:
+		var newFire := fireIcon.instantiate() as TextureRect
+		mothFireTracker.add_child(newFire)
 	
+
+func removeFireMoth(inc: int) -> void:
+	var i := 0
+	for child in mothFireTracker.get_children():
+		mothFireTracker.remove_child(child)
+		i += 1
+		if i == inc:
+			return
+
+
+func addFireThreat(inc: int) -> void:
+	for i in inc:
+		var newFire := fireIcon.instantiate() as TextureRect
+		threatFireTracker.add_child(newFire)
+	
+	
+func removeFireThreat(inc: int) -> void:
+	var i := 0
+	for child in threatFireTracker.get_children():
+		threatFireTracker.remove_child(child)
+		i += 1
+		if i == inc:
+			return
+
 
 func setHealthMoth(health: int) -> void:
 	healthBarMoth.value = health

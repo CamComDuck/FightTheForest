@@ -88,16 +88,6 @@ func incrementMothHealth(inc: int) -> void:
 
 
 func _on_moth_turn_state_entered() -> void:
-	if moth.isBurning():
-		mothBurnParticles.emitting = true
-		incrementMothHealth(-1)
-
-	await mothBurnParticles.finished
-
-	moth.incrementBurnRounds(-1)
-
-	moth.setIsMasked(false)
-
 	if isMothTurnSkipped: # no action
 		print("moth turn skipped!")
 		isMothTurnSkipped = false
@@ -109,6 +99,18 @@ func _on_moth_turn_state_entered() -> void:
 
 func _on_choosing_action_state_entered() -> void:
 	fightUI.setControlLabels("Eat", "Mask", "Attack")
+
+	moth.incrementBurnRounds(-1)
+	fightUI.removeFireMoth(1)
+
+	if moth.isBurning():
+		mothBurnParticles.emitting = true
+		await mothBurnParticles.finished
+		incrementMothHealth(-1)
+
+	if moth.isMasked:
+		moth.setIsMasked(false)
+		await moth.onTweenFinished
 
 	if not fightUI.isTweenRunning():
 		fightUI.transitionInLabels()
@@ -136,6 +138,7 @@ func _on_eat_state_entered() -> void:
 
 func _on_mask_state_entered() -> void:
 	moth.setIsMasked(true)
+	await moth.onTweenFinished
 
 	stateChart.send_event(onMothTurnEnded)
 
@@ -169,6 +172,7 @@ func _on_spin_state_entered() -> void: # one hit
 
 func _on_spit_state_entered() -> void: # burn
 	threat.incrementBurnRounds(2)
+	fightUI.addFireThreat(2)
 
 	attackFireMothParticles.emitting = true
 	await attackFireMothParticles.finished
@@ -189,7 +193,11 @@ func _on_wrap_state_entered() -> void: # tangle
 func _on_threat_turn_state_entered() -> void:
 	if threat.isBurning():
 		incrementThreatHealth(-1)
-	threat.incrementBurnRounds(-1)
+		threat.incrementBurnRounds(-1)
+		fightUI.removeFireThreat(1)
+		threatBurnParticles.emitting = true
+		await threatBurnParticles.finished
+
 
 	if isThreatTurnSkipped: # no action
 		print("threat turn skipped!")
@@ -199,10 +207,9 @@ func _on_threat_turn_state_entered() -> void:
 
 
 func _on_threat_choosing_attack_state_entered() -> void:
-	if threat.isBurning():
-		threatBurnParticles.emitting = true
+	if threatBurnParticles.emitting:
 		await threatBurnParticles.finished
-
+		
 	var randomNum = randi_range(1, 10) # 1 to 10 inclusive
 
 	if randomNum <= 6: # chose eat
@@ -220,6 +227,7 @@ func _on_threat_eat_state_entered() -> void:
 
 func _on_threat_fire_state_entered() -> void:
 	moth.incrementBurnRounds(2)
+	fightUI.addFireMoth(2)
 
 	attackFireThreatParticles.emitting = true
 	await attackFireThreatParticles.finished
