@@ -36,6 +36,9 @@ func _ready() -> void:
 func onActionChosen(direction: Vector2) -> void:
 	if direction != Vector2.ZERO and direction != Vector2(0, -1):
 		# Player selected a choice
+		fightUI.transitionOutLabels()
+		await fightUI.onTweenFinished
+
 		if direction.x < 0 and direction.y == 0: # left -> eat
 			stateChart.send_event(onMothChoseEat)
 
@@ -49,13 +52,16 @@ func onActionChosen(direction: Vector2) -> void:
 func onAttackChosen(direction: Vector2) -> void:
 	if direction != Vector2.ZERO and direction != Vector2(0, -1):
 		# Player selected a choice
-		if direction.x < 0 and direction.y == 0: # left -> eat
+		fightUI.transitionOutLabels()
+		await fightUI.onTweenFinished
+
+		if direction.x < 0 and direction.y == 0: # left -> spin
 			stateChart.send_event(onMothChoseSpin)
 
-		elif direction.x > 0 and direction.y == 0: # right -> mask
+		elif direction.x > 0 and direction.y == 0: # right -> spit
 			stateChart.send_event(onMothChoseSpit)
 
-		elif direction.x == 0 and direction.y > 0: # up -> attack
+		elif direction.x == 0 and direction.y > 0: # up -> wrap
 			stateChart.send_event(onMothChoseWrap)
 
 
@@ -87,8 +93,13 @@ func _on_moth_turn_state_entered() -> void:
 
 
 func _on_choosing_action_state_entered() -> void:
+	fightUI.setControlLabels("Eat", "Mask", "Attack")
+
 	if isUsingKeyboard:
 		keybinds.connect("onDirectionChosen", onActionChosen)
+
+	fightUI.transitionInLabels()
+	await fightUI.onTweenFinished
 
 
 func _on_choosing_action_state_exited() -> void:
@@ -99,18 +110,25 @@ func _on_choosing_action_state_exited() -> void:
 func _on_eat_state_entered() -> void:
 	print("eat!")
 	moth.incrementHealth(2)
+
 	stateChart.send_event(onMothTurnEnded)
 
 
 func _on_mask_state_entered() -> void:
 	print("mask!")
 	moth.setIsMasked(true)
+
 	stateChart.send_event(onMothTurnEnded)
 
 
 func _on_choosing_attack_state_entered() -> void:
+	fightUI.setControlLabels("Spin", "Spit", "Wrap")
+
 	if isUsingKeyboard:
 		keybinds.connect("onDirectionChosen", onAttackChosen)
+
+	fightUI.transitionInLabels()
+	await fightUI.onTweenFinished
 
 
 func _on_choosing_attack_state_exited() -> void:
@@ -121,12 +139,14 @@ func _on_choosing_attack_state_exited() -> void:
 func _on_spin_state_entered() -> void: # one hit
 	print("spin!")
 	incrementThreatHealth(-3)
+
 	stateChart.send_event(onMothTurnEnded)
 
 
 func _on_spit_state_entered() -> void: # burn
 	print("spit!")
 	threat.incrementBurnRounds(2)
+
 	stateChart.send_event(onMothTurnEnded)
 
 
@@ -134,19 +154,8 @@ func _on_wrap_state_entered() -> void: # tangle
 	print("wrap!")
 	isThreatTurnSkipped = true
 	incrementThreatHealth(-1)
+
 	stateChart.send_event(onMothTurnEnded)
-
-
-func _on_threat_on_threat_died() -> void:
-	# win fight
-	print("you win!")
-	get_tree().quit()
-
-
-func _on_moth_on_moth_died() -> void:
-	# lose fight
-	print("you lose!")
-	get_tree().quit()
 
 
 func _on_threat_turn_state_entered() -> void:
@@ -180,3 +189,21 @@ func _on_threat_fire_state_entered() -> void:
 	print("threat burns moth!")
 	moth.incrementBurnRounds(2)
 	stateChart.send_event(onThreatTurnEnded)
+
+
+func checkGameEnded() -> void:
+	if moth.getHealth() <= 0: # lose fight
+		print("you lose!")
+		get_tree().quit()
+
+	if threat.getHealth() <= 0: # win fight
+		print("you win!")
+		get_tree().quit()
+
+
+func _on_moth_turn_state_exited() -> void:
+	checkGameEnded()
+
+
+func _on_threat_turn_state_exited() -> void:
+	checkGameEnded()

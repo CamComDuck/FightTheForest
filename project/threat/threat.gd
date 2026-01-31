@@ -2,8 +2,6 @@
 class_name Threat
 extends Sprite2D
 
-signal onThreatDied
-
 const maxHealth := 10
 var currentHealth := 10
 var burnRoundsLeft := 0
@@ -18,10 +16,6 @@ func getMaxHealth() -> int:
 
 func incrementHealth(inc: int) -> void:
 	currentHealth += inc
-	if currentHealth <= 0:
-		# die
-		print("threat died")
-		onThreatDied.emit()
 
 
 func incrementBurnRounds(inc: int) -> void:
