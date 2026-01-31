@@ -161,6 +161,9 @@ func _on_choosing_attack_state_exited() -> void:
 func _on_spin_state_entered() -> void: # one hit
 	incrementThreatHealth(-3)
 
+	moth.startSpinAnim()
+	await moth.onTweenFinished
+
 	stateChart.send_event(onMothTurnEnded)
 
 
@@ -176,6 +179,9 @@ func _on_spit_state_entered() -> void: # burn
 func _on_wrap_state_entered() -> void: # tangle
 	isThreatTurnSkipped = true
 	incrementThreatHealth(-1)
+
+	moth.startWrapAnim(threat.position)
+	await moth.onTweenFinished
 
 	stateChart.send_event(onMothTurnEnded)
 

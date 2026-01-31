@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="11_vdykp"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_6ogfw"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="14_6ogfw"]
+[ext_resource type="Texture2D" uid="uid://ca20i36bffw6g" path="res://icons/spit.png" id="17_simbi"]
 [ext_resource type="Texture2D" uid="uid://d1772pwrja6l" path="res://icons/fire.png" id="17_v46jh"]
 
 [node name="Fight" type="Node2D" unique_id=2011946084]
@@ -314,6 +315,13 @@ script = ExtResource("11_vdykp")
 initial_state = NodePath("ChoosingAttack")
 metadata/_custom_type_script = "uid://jk2jm1g6q853"
 
+[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=879824248]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../MothTurn")
+event = &"OnThreatTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
 [node name="ChoosingAttack" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=635580452]
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
@@ -354,25 +362,19 @@ event = &"OnThreatTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
-[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=879824248]
-script = ExtResource("14_6ogfw")
-to = NodePath("../../MothTurn")
-event = &"OnThreatTurnEnded"
-delay_in_seconds = "0.0"
-metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
-
 [node name="AttackFireMoth" type="CPUParticles2D" parent="." unique_id=1860892088]
 unique_name_in_owner = true
 position = Vector2(638, 498)
 emitting = false
-amount = 20
-texture = ExtResource("17_v46jh")
+amount = 15
+texture = ExtResource("17_simbi")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.1
 randomness = 0.66
 emission_shape = 1
 emission_sphere_radius = 44.45
+spread = 10.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 1000.0
 initial_velocity_max = 1200.0
