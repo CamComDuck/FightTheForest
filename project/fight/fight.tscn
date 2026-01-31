@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://3uylcggns17x" path="res://threat/threat.tscn" id="4_4wrhi"]
 [ext_resource type="Texture2D" uid="uid://c77amhgf26gaa" path="res://UI/button wider clicked.png" id="5_akaej"]
 [ext_resource type="Texture2D" uid="uid://deysuaw8favcb" path="res://UI/button wider hover.png" id="6_7xocg"]
+[ext_resource type="Script" uid="uid://njl4pxmtonj1" path="res://fight/ui.gd" id="7_ny3o0"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="10_dsfgu"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="11_vdykp"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_6ogfw"]
@@ -51,42 +52,44 @@ flip_h = true
 unique_name_in_owner = true
 position = Vector2(1403, 533)
 
-[node name="UI" type="Control" parent="." unique_id=779417414]
+[node name="FightUI" type="Control" parent="." unique_id=779417414]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("7_ny3o0")
 metadata/_edit_lock_ = true
 
-[node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=256701191]
+[node name="PanelContainer" type="PanelContainer" parent="FightUI" unique_id=256701191]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_k0y55")
 
-[node name="Borders" type="MarginContainer" parent="UI/PanelContainer" unique_id=1264365548]
+[node name="Borders" type="MarginContainer" parent="FightUI/PanelContainer" unique_id=1264365548]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Left" type="TextureRect" parent="UI/PanelContainer/Borders" unique_id=549451943]
+[node name="Left" type="TextureRect" parent="FightUI/PanelContainer/Borders" unique_id=549451943]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("2_yw3gg")
 stretch_mode = 4
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/PanelContainer/Borders/Left" unique_id=845672107]
+[node name="CenterContainer" type="CenterContainer" parent="FightUI/PanelContainer/Borders/Left" unique_id=845672107]
 layout_mode = 0
 offset_right = 120.0
 offset_bottom = 320.0
 theme = ExtResource("3_b28lu")
 
-[node name="Label" type="Label" parent="UI/PanelContainer/Borders/Left/CenterContainer" unique_id=78002302]
+[node name="Label" type="Label" parent="FightUI/PanelContainer/Borders/Left/CenterContainer" unique_id=78002302]
 layout_mode = 2
 theme = ExtResource("3_b28lu")
 theme_override_font_sizes/font_size = 50
@@ -96,19 +99,19 @@ T"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Right" type="TextureRect" parent="UI/PanelContainer/Borders" unique_id=1775976402]
+[node name="Right" type="TextureRect" parent="FightUI/PanelContainer/Borders" unique_id=1775976402]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 texture = ExtResource("2_yw3gg")
 stretch_mode = 4
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/PanelContainer/Borders/Right" unique_id=1823429697]
+[node name="CenterContainer" type="CenterContainer" parent="FightUI/PanelContainer/Borders/Right" unique_id=1823429697]
 layout_mode = 0
 offset_right = 120.0
 offset_bottom = 320.0
 
-[node name="Label" type="Label" parent="UI/PanelContainer/Borders/Right/CenterContainer" unique_id=1244007480]
+[node name="Label" type="Label" parent="FightUI/PanelContainer/Borders/Right/CenterContainer" unique_id=1244007480]
 layout_mode = 2
 theme = ExtResource("3_b28lu")
 theme_override_font_sizes/font_size = 50
@@ -119,18 +122,18 @@ K"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Top" type="TextureRect" parent="UI/PanelContainer/Borders" unique_id=399658935]
+[node name="Top" type="TextureRect" parent="FightUI/PanelContainer/Borders" unique_id=399658935]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("3_1ybsv")
 stretch_mode = 4
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/PanelContainer/Borders/Top" unique_id=1405261684]
+[node name="CenterContainer" type="CenterContainer" parent="FightUI/PanelContainer/Borders/Top" unique_id=1405261684]
 layout_mode = 0
 offset_right = 320.0
 offset_bottom = 120.0
 
-[node name="Label" type="Label" parent="UI/PanelContainer/Borders/Top/CenterContainer" unique_id=1620176203]
+[node name="Label" type="Label" parent="FightUI/PanelContainer/Borders/Top/CenterContainer" unique_id=1620176203]
 layout_mode = 2
 theme = ExtResource("3_b28lu")
 theme_override_font_sizes/font_size = 50
@@ -138,26 +141,30 @@ text = "ATTACK"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HealthBars" type="MarginContainer" parent="UI/PanelContainer" unique_id=521131973]
+[node name="HealthBars" type="MarginContainer" parent="FightUI/PanelContainer" unique_id=521131973]
 layout_mode = 2
 theme_override_constants/margin_left = 200
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 200
 theme_override_constants/margin_bottom = 50
 
-[node name="HealthLeft" type="TextureProgressBar" parent="UI/PanelContainer/HealthBars" unique_id=1557233360]
+[node name="HealthBarMoth" type="TextureProgressBar" parent="FightUI/PanelContainer/HealthBars" unique_id=1557233360]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
-value = 83.0
+max_value = 10.0
+value = 6.0
 texture_under = ExtResource("5_akaej")
 texture_progress = ExtResource("6_7xocg")
 
-[node name="HealthRight" type="TextureProgressBar" parent="UI/PanelContainer/HealthBars" unique_id=1137846865]
+[node name="HealthBarThreat" type="TextureProgressBar" parent="FightUI/PanelContainer/HealthBars" unique_id=1137846865]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
-value = 83.0
+max_value = 10.0
+value = 9.0
 texture_under = ExtResource("5_akaej")
 texture_progress = ExtResource("6_7xocg")
 
@@ -305,6 +312,8 @@ event = &"OnThreatTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
+[connection signal="onMothDied" from="Moth" to="." method="_on_moth_on_moth_died"]
+[connection signal="onThreatDied" from="Threat" to="." method="_on_threat_on_threat_died"]
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_entered"]
 [connection signal="state_exited" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_exited"]

@@ -4,7 +4,8 @@ extends Node2D
 @onready var moth: Moth = %Moth as Moth
 @onready var threat: Threat = %Threat as Threat
 @onready var keybinds: Keybinds = %Keybinds as Keybinds
-@onready var stateChart:StateChart = $StateChart as StateChart
+@onready var stateChart:StateChart = %StateChart as StateChart
+@onready var fightUI:FightUI = %FightUI as FightUI
 
 const onMothChoseEat := "OnMothChoseEat"
 const onMothChoseMask := "OnMothChoseMask"
@@ -21,6 +22,11 @@ var isThreatTurnSkipped := false
 var isMothTurnSkipped := false
 
 var isUsingKeyboard := true
+
+func _ready() -> void:
+	fightUI.setHealthMoth(moth.getHealth())
+	fightUI.setHealthThreat(threat.getHealth())
+	
 
 func onActionChosen(direction: Vector2) -> void:
 	if direction != Vector2.ZERO and direction != Vector2(0, -1):
@@ -50,7 +56,14 @@ func onAttackChosen(direction: Vector2) -> void:
 
 func _on_threat_turn_state_entered() -> void:
 	print("threat turn entered")
+
+	if threat.isBurning():
+		incrementThreatHealth(-1)
+		print("burn!")
+	threat.incrementBurnRounds(-1)
+
 	if isThreatTurnSkipped: # no action
+		print("threat turn skipped!")
 		isThreatTurnSkipped = false
 		stateChart.send_event(onThreatTurnEnded)
 
@@ -63,6 +76,7 @@ func _on_moth_turn_state_entered() -> void:
 	moth.setIsMasked(false)
 
 	if isMothTurnSkipped: # no action
+		print("moth turn skipped!")
 		isMothTurnSkipped = false
 		stateChart.send_event(onMothTurnEnded)
 
@@ -91,6 +105,7 @@ func _on_mask_state_entered() -> void:
 	moth.setIsMasked(true)
 	stateChart.send_event(onMothTurnEnded)
 
+
 func _on_choosing_attack_state_entered() -> void:
 	if isUsingKeyboard:
 		keybinds.connect("onDirectionChosen", onAttackChosen)
@@ -101,16 +116,37 @@ func _on_choosing_attack_state_exited() -> void:
 		keybinds.disconnect("onDirectionChosen", onAttackChosen)
 
 
-func _on_spin_state_entered() -> void:
+func _on_spin_state_entered() -> void: # one hit
 	print("spin!")
+	incrementThreatHealth(-3)
 	stateChart.send_event(onMothTurnEnded)
 
 
-func _on_spit_state_entered() -> void:
+func _on_spit_state_entered() -> void: # burn
 	print("spit!")
+	threat.incrementBurnRounds(2)
 	stateChart.send_event(onMothTurnEnded)
 
 
-func _on_wrap_state_entered() -> void:
+func _on_wrap_state_entered() -> void: # tangle
 	print("wrap!")
+	isThreatTurnSkipped = true
+	incrementThreatHealth(-1)
 	stateChart.send_event(onMothTurnEnded)
+
+
+func _on_threat_on_threat_died() -> void:
+	# win fight
+	print("you win!")
+	get_tree().quit()
+
+
+func _on_moth_on_moth_died() -> void:
+	# lose fight
+	print("you lose!")
+	get_tree().quit()
+
+
+func incrementThreatHealth(inc: int) -> void:
+	threat.incrementHealth(inc)
+	fightUI.setHealthThreat(threat.getHealth())

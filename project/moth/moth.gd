@@ -11,13 +11,16 @@ var isMasked := false
 
 func setIsMasked(newMasked: bool) -> void:
     isMasked = newMasked
-    
+
 
 func getHealth() -> int:
     return currentHealth
 
 
 func incrementHealth(inc: int) -> void:
+    if isMasked:
+        return
+        
     currentHealth += inc
     if currentHealth <= 0:
         # die
