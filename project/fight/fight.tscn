@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://o4ymgjw4x2hx"]
+
+[ext_resource type="Texture2D" uid="uid://bcasm2qhk108q" path="res://fight/background.png" id="1_wldmm"]
+
+[node name="Fight" type="Node2D" unique_id=2011946084]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=674374200]
+position = Vector2(-39.111057, -22.000002)
+scale = Vector2(1.0444444, 1.0444444)
+texture = ExtResource("1_wldmm")
+centered = false
+metadata/_edit_lock_ = true

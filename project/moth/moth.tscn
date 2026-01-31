@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://6wlo13b8vqqw"]
+
+[ext_resource type="Texture2D" uid="uid://cv7inc6eqbfjh" path="res://moth/moth.png" id="1_murul"]
+[ext_resource type="Script" uid="uid://b2fnp30jbet4g" path="res://moth/moth.gd" id="1_y4cos"]
+
+[node name="Moth" type="Sprite2D" unique_id=46280394]
+texture = ExtResource("1_murul")
+script = ExtResource("1_y4cos")

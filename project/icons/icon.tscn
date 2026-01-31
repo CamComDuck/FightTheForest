@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bx1jeswm6836e"]
+
+[ext_resource type="Texture2D" uid="uid://c1jmxdt52xrt1" path="res://icons/element_plant_white.png" id="1_x35rk"]
+[ext_resource type="Script" uid="uid://dsh52c8r3p35t" path="res://icons/icon.gd" id="2_x35rk"]
+[ext_resource type="Texture2D" uid="uid://dy5amgvnt8vtp" path="res://icons/box_plain.png" id="3_ief84"]
+
+[node name="Icon" type="Sprite2D" unique_id=90838474]
+texture = ExtResource("1_x35rk")
+script = ExtResource("2_x35rk")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=690875795]
+unique_name_in_owner = true
+z_index = -1
+scale = Vector2(5, 5)
+texture = ExtResource("3_ief84")
