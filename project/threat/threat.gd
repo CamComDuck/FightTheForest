@@ -2,12 +2,19 @@
 class_name Threat
 extends Sprite2D
 
+signal OnThreatDied
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+var maxHealth := 10
+var currentHealth := 10
+
+func GetHealth() -> int:
+    return currentHealth
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+func IncrementHealth(inc: int) -> void:
+    currentHealth += inc
+    if currentHealth <= 0:
+        # die
+        print("threat died")
+        OnThreatDied.emit()
+        

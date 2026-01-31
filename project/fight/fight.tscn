@@ -169,17 +169,17 @@ metadata/_custom_type_script = "uid://couw105c3bde4"
 
 [node name="CompoundState" type="Node" parent="StateChart" unique_id=2123837378]
 script = ExtResource("11_vdykp")
-initial_state = NodePath("PlayerTurn")
+initial_state = NodePath("MothTurn")
 metadata/_custom_type_script = "uid://jk2jm1g6q853"
 
-[node name="PlayerTurn" type="Node" parent="StateChart/CompoundState" unique_id=381439265]
+[node name="MothTurn" type="Node" parent="StateChart/CompoundState" unique_id=381439265]
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="OnPlayerPickedMove" type="Node" parent="StateChart/CompoundState/PlayerTurn" unique_id=480279074]
+[node name="OnPlayerTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=480279074]
 script = ExtResource("14_6ogfw")
 to = NodePath("../../ThreatTurn")
-event = &"OnPlayerPickedMove"
+event = &"OnMothTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
@@ -187,12 +187,12 @@ metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="OnPlayerPickedMove" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=1644826683]
+[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=1644826683]
 script = ExtResource("14_6ogfw")
-to = NodePath("../../PlayerTurn")
-delay_in_seconds = "1.0"
+to = NodePath("../../MothTurn")
+event = &"OnThreatTurnEnded"
+delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
-[connection signal="state_entered" from="StateChart/CompoundState/PlayerTurn" to="." method="_on_player_turn_state_entered"]
-[connection signal="state_processing" from="StateChart/CompoundState/PlayerTurn" to="." method="_on_player_turn_state_processing"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn" to="." method="_on_threat_turn_state_entered"]
