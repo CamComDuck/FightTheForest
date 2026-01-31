@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://3uylcggns17x"]
+
+[ext_resource type="Texture2D" uid="uid://wefy73qig2xl" path="res://threat/tree.png" id="1_n3pjp"]
+[ext_resource type="Script" uid="uid://47r70u4b4wfs" path="res://threat/threat.gd" id="2_805tw"]
+
+[node name="Threat" type="Sprite2D" unique_id=480288523]
+texture = ExtResource("1_n3pjp")
+script = ExtResource("2_805tw")

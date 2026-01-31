@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="FightTheForest"
-run/main_scene="uid://bk2s06cl54afq"
+run/main_scene="uid://o4ymgjw4x2hx"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/use_filter=false
@@ -27,10 +27,12 @@ window/stretch/aspect="expand"
 [file_customization]
 
 folder_colors={
+"res://UI/": "green",
 "res://fight/": "orange",
 "res://forest/": "orange",
 "res://icons/": "yellow",
 "res://moth/": "yellow",
+"res://threat/": "yellow",
 "res://title/": "orange"
 }
 

@@ -1,0 +1,11 @@
+[gd_resource type="Theme" format=3 uid="uid://c1ideykdfrqst"]
+
+[ext_resource type="FontFile" uid="uid://cqvimt4tx7nlm" path="res://UI/Candy Town.otf" id="1_317tv"]
+
+[resource]
+default_font = ExtResource("1_317tv")
+Label/font_sizes/font_size = 50
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
