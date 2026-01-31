@@ -35,8 +35,8 @@ var isUsingKeyboard := true
 func _ready() -> void:
 	randomize()
 	fightUI.setMaxHealths(moth.getMaxHealth(), threat.getMaxHealth())
-	fightUI.setHealthMoth(moth.getHealth())
-	fightUI.setHealthThreat(threat.getHealth())
+	fightUI.setHealthMoth(moth.getHealth(), false)
+	fightUI.setHealthThreat(threat.getHealth(), false)
 	
 
 func onActionChosen(direction: Vector2) -> void:
@@ -104,9 +104,13 @@ func _on_choosing_action_state_entered() -> void:
 	fightUI.removeFireMoth(1)
 
 	if moth.isBurning():
+		print("particles")
 		mothBurnParticles.emitting = true
 		await mothBurnParticles.finished
+
+		print("health")
 		incrementMothHealth(-1)
+		await fightUI.onTweenFinished
 
 	if moth.isMasked:
 		moth.setIsMasked(false)
@@ -130,8 +134,8 @@ func _on_choosing_action_state_exited() -> void:
 
 
 func _on_eat_state_entered() -> void:
-	print("eat!")
-	moth.incrementHealth(2)
+	incrementMothHealth(2)
+	await fightUI.onTweenFinished
 
 	stateChart.send_event(onMothTurnEnded)
 
@@ -162,10 +166,11 @@ func _on_choosing_attack_state_exited() -> void:
 
 
 func _on_spin_state_entered() -> void: # one hit
-	incrementThreatHealth(-3)
-
 	moth.startSpinAnim()
 	await moth.onTweenFinished
+
+	incrementThreatHealth(-3)
+	await fightUI.onTweenFinished
 
 	stateChart.send_event(onMothTurnEnded)
 
@@ -182,21 +187,26 @@ func _on_spit_state_entered() -> void: # burn
 
 func _on_wrap_state_entered() -> void: # tangle
 	isThreatTurnSkipped = true
-	incrementThreatHealth(-1)
 
 	moth.startWrapAnim(threat.position)
 	await moth.onTweenFinished
 
+	incrementThreatHealth(-1)
+	await fightUI.onTweenFinished
+
 	stateChart.send_event(onMothTurnEnded)
 
 
-func _on_threat_turn_state_entered() -> void:
+func _on_threat_choosing_attack_state_entered() -> void:
 	if threat.isBurning():
-		incrementThreatHealth(-1)
 		threat.incrementBurnRounds(-1)
 		fightUI.removeFireThreat(1)
+
 		threatBurnParticles.emitting = true
 		await threatBurnParticles.finished
+
+		incrementThreatHealth(-1)
+		await fightUI.onTweenFinished
 
 
 	if isThreatTurnSkipped: # no action
@@ -204,24 +214,21 @@ func _on_threat_turn_state_entered() -> void:
 		isThreatTurnSkipped = false
 		
 		stateChart.send_event(onThreatTurnEnded)
-
-
-func _on_threat_choosing_attack_state_entered() -> void:
-	if threatBurnParticles.emitting:
-		await threatBurnParticles.finished
-		
-	var randomNum = randi_range(1, 10) # 1 to 10 inclusive
-
-	if randomNum <= 6: # chose eat
-		stateChart.send_event(onThreatChoseEat)
 	
-	else: # chose fire
-		stateChart.send_event(onThreatChoseFire)
+	else:
+		var randomNum = randi_range(1, 10) # 1 to 10 inclusive
+
+		if randomNum <= 6: # chose eat
+			stateChart.send_event(onThreatChoseEat)
+		
+		else: # chose fire
+			stateChart.send_event(onThreatChoseFire)
 
 
 func _on_threat_eat_state_entered() -> void:
 	print("threat eats moth!")
 	incrementMothHealth(-2)
+	await fightUI.onTweenFinished
 	stateChart.send_event(onThreatTurnEnded)
 
 

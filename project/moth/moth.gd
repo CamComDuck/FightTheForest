@@ -56,9 +56,9 @@ func setIsMasked(newMasked: bool) -> void:
     isMasked = newMasked
     currentTween = create_tween().set_trans(Tween.TRANS_LINEAR)
     var modulateFinal : Color
-    print(isMasked)
+
     if isMasked:
-        modulateFinal = Color(1.0, 1.0, 1.0, 0.5)
+        modulateFinal = Color(1.0, 1.0, 1.0, 0.25)
     else:
         modulateFinal = Color(1.0, 1.0, 1.0, 1.0)
         
@@ -88,7 +88,7 @@ func incrementHealth(inc: int) -> void:
 func incrementBurnRounds(inc: int) -> void:
     if isMasked:
         return
-        
+
     burnRoundsLeft += inc
     if burnRoundsLeft < 0:
         burnRoundsLeft = 0

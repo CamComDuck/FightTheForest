@@ -27,7 +27,7 @@ var leftPositionStart : Vector2
 var rightPositionStart : Vector2
 var upPositionStart : Vector2
 
-var tweenControls : Tween
+var currentTween : Tween
 
 func _ready():
 	leftPositionStart = leftControl.position
@@ -36,7 +36,7 @@ func _ready():
 
 
 func isTweenRunning() -> bool:
-	return tweenControls and tweenControls.is_running()
+	return currentTween and currentTween.is_running()
 
 
 func addFireMoth(inc: int) -> void:
@@ -69,12 +69,24 @@ func removeFireThreat(inc: int) -> void:
 			return
 
 
-func setHealthMoth(health: int) -> void:
+func setHealthMoth(health: int, useAnim: bool = true) -> void:
+	if useAnim:
+		currentTween = create_tween().set_trans(Tween.TRANS_LINEAR)
+		currentTween.tween_property(healthBarMoth, "value", health, .5)
+		await currentTween.finished
 	healthBarMoth.value = health
+	if useAnim:
+		onTweenFinished.emit()
 
 
-func setHealthThreat(health: int) -> void:
+func setHealthThreat(health: int, useAnim: bool = true) -> void:
+	if useAnim:
+		currentTween = create_tween().set_trans(Tween.TRANS_LINEAR)
+		currentTween.tween_property(healthBarThreat, "value", health, .5)
+		await currentTween.finished
 	healthBarThreat.value = health
+	if useAnim:
+		onTweenFinished.emit()
 
 
 func setMaxHealths(moth: int, threat: int) -> void:
@@ -97,7 +109,7 @@ func setControlLabels(leftText: String, rightText: String, upText: String) -> vo
 
 
 func transitionInLabels() -> void:
-	tweenControls = create_tween().set_parallel().set_trans(transition)
+	currentTween = create_tween().set_parallel().set_trans(transition)
 
 	var leftFinalPosition := Vector2(
 		leftPositionStart.x + moveAmount + leftControl.size.x,
@@ -111,11 +123,11 @@ func transitionInLabels() -> void:
 		upPositionStart.x,
 		upPositionStart.y + moveAmount + upControl.size.y)
 
-	tweenControls.tween_property(leftControl, "global_position", leftFinalPosition, normDuration)
-	tweenControls.tween_property(rightControl, "global_position", rightFinalPosition, normDuration)
-	tweenControls.tween_property(upControl, "global_position", upFinalPosition, normDuration)
+	currentTween.tween_property(leftControl, "global_position", leftFinalPosition, normDuration)
+	currentTween.tween_property(rightControl, "global_position", rightFinalPosition, normDuration)
+	currentTween.tween_property(upControl, "global_position", upFinalPosition, normDuration)
 
-	await tweenControls.finished
+	await currentTween.finished
 	onTweenFinished.emit()
 
 
@@ -126,7 +138,7 @@ func transitionOutLabels(isStart: bool = false) -> void:
 	else:
 		duration = normDuration
 	
-	tweenControls = create_tween().set_parallel().set_trans(transition)
+	currentTween = create_tween().set_parallel().set_trans(transition)
 
 	var leftFinalPosition := Vector2(
 		leftPositionStart.x - moveAmount - leftControl.size.x,
@@ -140,9 +152,9 @@ func transitionOutLabels(isStart: bool = false) -> void:
 		upPositionStart.x,
 		upPositionStart.y - moveAmount - upControl.size.y)
 
-	tweenControls.tween_property(leftControl, "global_position", leftFinalPosition, duration)
-	tweenControls.tween_property(rightControl, "global_position", rightFinalPosition, duration)
-	tweenControls.tween_property(upControl, "global_position", upFinalPosition, duration)
+	currentTween.tween_property(leftControl, "global_position", leftFinalPosition, duration)
+	currentTween.tween_property(rightControl, "global_position", rightFinalPosition, duration)
+	currentTween.tween_property(upControl, "global_position", upFinalPosition, duration)
 
-	await tweenControls.finished
+	await currentTween.finished
 	onTweenFinished.emit()
