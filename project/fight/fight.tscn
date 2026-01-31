@@ -301,11 +301,52 @@ event = &"OnMothTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
-[node name="ThreatTurn" type="Node" parent="StateChart/CompoundState" unique_id=1084717329]
+[node name="ThreatTurn" type="Node" parent="StateChart/CompoundState" unique_id=1464793538]
+script = ExtResource("11_vdykp")
+initial_state = NodePath("ChoosingAttack")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="ChoosingAttack" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=635580452]
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=1644826683]
+[node name="OnThreatChoseEat" type="Node" parent="StateChart/CompoundState/ThreatTurn/ChoosingAttack" unique_id=1686260127]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../Eat")
+event = &"OnThreatChoseEat"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnThreatChoseFire" type="Node" parent="StateChart/CompoundState/ThreatTurn/ChoosingAttack" unique_id=873700165]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../Fire")
+event = &"OnThreatChoseFire"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Eat" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=937128868]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn/Eat" unique_id=1687568655]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../MothTurn")
+event = &"OnThreatTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Fire" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=2044222743]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn/Fire" unique_id=589972737]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../MothTurn")
+event = &"OnThreatTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=879824248]
 script = ExtResource("14_6ogfw")
 to = NodePath("../../MothTurn")
 event = &"OnThreatTurnEnded"
@@ -325,3 +366,6 @@ metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Attack/Spit" to="." method="_on_spit_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Attack/Wrap" to="." method="_on_wrap_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn" to="." method="_on_threat_turn_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/ChoosingAttack" to="." method="_on_threat_choosing_attack_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/Eat" to="." method="_on_threat_eat_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/Fire" to="." method="_on_threat_fire_state_entered"]

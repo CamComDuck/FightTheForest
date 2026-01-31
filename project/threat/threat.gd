@@ -4,12 +4,16 @@ extends Sprite2D
 
 signal onThreatDied
 
-var maxHealth := 10
+const maxHealth := 10
 var currentHealth := 10
 var burnRoundsLeft := 0
 
 func getHealth() -> int:
 	return currentHealth
+
+
+func getMaxHealth() -> int:
+	return maxHealth
 
 
 func incrementHealth(inc: int) -> void:

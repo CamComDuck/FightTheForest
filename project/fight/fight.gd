@@ -15,6 +15,9 @@ const onMothChoseSpin := "OnMothChoseSpin"
 const onMothChoseSpit := "OnMothChoseSpit"
 const onMothChoseWrap := "OnMothChoseWrap"
 
+const onThreatChoseEat := "OnThreatChoseEat"
+const onThreatChoseFire := "OnThreatChoseFire"
+
 const onMothTurnEnded := "OnMothTurnEnded"
 const onThreatTurnEnded := "OnThreatTurnEnded"
 
@@ -24,6 +27,8 @@ var isMothTurnSkipped := false
 var isUsingKeyboard := true
 
 func _ready() -> void:
+	randomize()
+	fightUI.setMaxHealths(moth.getMaxHealth(), threat.getMaxHealth())
 	fightUI.setHealthMoth(moth.getHealth())
 	fightUI.setHealthThreat(threat.getHealth())
 	
@@ -54,25 +59,22 @@ func onAttackChosen(direction: Vector2) -> void:
 			stateChart.send_event(onMothChoseWrap)
 
 
-func _on_threat_turn_state_entered() -> void:
-	print("threat turn entered")
+func incrementThreatHealth(inc: int) -> void:
+	threat.incrementHealth(inc)
+	fightUI.setHealthThreat(threat.getHealth())
 
-	if threat.isBurning():
-		incrementThreatHealth(-1)
-		print("burn!")
-	threat.incrementBurnRounds(-1)
 
-	if isThreatTurnSkipped: # no action
-		print("threat turn skipped!")
-		isThreatTurnSkipped = false
-		stateChart.send_event(onThreatTurnEnded)
-
-	else: # picks random action
-		stateChart.send_event(onThreatTurnEnded)
+func incrementMothHealth(inc: int) -> void:
+	moth.incrementHealth(inc)
+	fightUI.setHealthMoth(moth.getHealth())
 
 
 func _on_moth_turn_state_entered() -> void:
-	print("player turn entered")
+	if moth.isBurning():
+		incrementMothHealth(-1)
+		print("moth burns!")
+	moth.incrementBurnRounds(-1)
+
 	moth.setIsMasked(false)
 
 	if isMothTurnSkipped: # no action
@@ -96,7 +98,7 @@ func _on_choosing_action_state_exited() -> void:
 
 func _on_eat_state_entered() -> void:
 	print("eat!")
-	moth.incrementHealth(1)
+	moth.incrementHealth(2)
 	stateChart.send_event(onMothTurnEnded)
 
 
@@ -147,6 +149,34 @@ func _on_moth_on_moth_died() -> void:
 	get_tree().quit()
 
 
-func incrementThreatHealth(inc: int) -> void:
-	threat.incrementHealth(inc)
-	fightUI.setHealthThreat(threat.getHealth())
+func _on_threat_turn_state_entered() -> void:
+	if threat.isBurning():
+		incrementThreatHealth(-1)
+		print("threat burns!")
+	threat.incrementBurnRounds(-1)
+
+	if isThreatTurnSkipped: # no action
+		print("threat turn skipped!")
+		isThreatTurnSkipped = false
+		stateChart.send_event(onThreatTurnEnded)
+
+
+func _on_threat_choosing_attack_state_entered() -> void:
+	var randomNum = randi_range(1, 10) # 1 to 10 inclusive
+	if randomNum <= 6: # chose eat
+		stateChart.send_event(onThreatChoseEat)
+	
+	else: # chose fire
+		stateChart.send_event(onThreatChoseFire)
+
+
+func _on_threat_eat_state_entered() -> void:
+	print("threat eats moth!")
+	incrementMothHealth(-2)
+	stateChart.send_event(onThreatTurnEnded)
+
+
+func _on_threat_fire_state_entered() -> void:
+	print("threat burns moth!")
+	moth.incrementBurnRounds(2)
+	stateChart.send_event(onThreatTurnEnded)

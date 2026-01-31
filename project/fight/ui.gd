@@ -12,3 +12,8 @@ func setHealthMoth(health: int) -> void:
 
 func setHealthThreat(health: int) -> void:
 	healthBarThreat.value = health
+
+
+func setMaxHealths(moth: int, threat: int) -> void:
+	healthBarMoth.max_value = moth
+	healthBarThreat.max_value = threat
