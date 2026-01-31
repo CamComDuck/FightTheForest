@@ -104,11 +104,9 @@ func _on_choosing_action_state_entered() -> void:
 	fightUI.removeFireMoth(1)
 
 	if moth.isBurning():
-		print("particles")
 		mothBurnParticles.emitting = true
 		await mothBurnParticles.finished
 
-		print("health")
 		incrementMothHealth(-1)
 		await fightUI.onTweenFinished
 
@@ -134,6 +132,9 @@ func _on_choosing_action_state_exited() -> void:
 
 
 func _on_eat_state_entered() -> void:
+	moth.startEatAnim()
+	await moth.onTweenFinished
+
 	incrementMothHealth(2)
 	await fightUI.onTweenFinished
 

@@ -2,7 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://cv7inc6eqbfjh" path="res://moth/moth.png" id="1_murul"]
 [ext_resource type="Script" uid="uid://b2fnp30jbet4g" path="res://moth/moth.gd" id="1_y4cos"]
+[ext_resource type="Texture2D" uid="uid://bvasg15t1ld48" path="res://icons/carronia.png" id="3_quv4a"]
 
-[node name="Moth" type="Sprite2D" unique_id=46280394]
-texture = ExtResource("1_murul")
+[node name="Moth" type="Node2D" unique_id=1778877818]
 script = ExtResource("1_y4cos")
+
+[node name="Moth" type="Sprite2D" parent="." unique_id=1056349692]
+unique_name_in_owner = true
+texture = ExtResource("1_murul")
+flip_h = true
+
+[node name="Food" type="Sprite2D" parent="." unique_id=927503364]
+unique_name_in_owner = true
+visible = false
+position = Vector2(232.00002, 134)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_quv4a")
