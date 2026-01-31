@@ -172,13 +172,124 @@ script = ExtResource("11_vdykp")
 initial_state = NodePath("MothTurn")
 metadata/_custom_type_script = "uid://jk2jm1g6q853"
 
-[node name="MothTurn" type="Node" parent="StateChart/CompoundState" unique_id=381439265]
+[node name="MothTurn" type="Node" parent="StateChart/CompoundState" unique_id=754119845]
+script = ExtResource("11_vdykp")
+initial_state = NodePath("ChoosingAction")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="OnMothTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=1993858549]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../ThreatTurn")
+event = &"OnMothTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="ChoosingAction" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=519937630]
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="OnPlayerTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=480279074]
+[node name="OnMothChoseEat" type="Node" parent="StateChart/CompoundState/MothTurn/ChoosingAction" unique_id=1785502605]
 script = ExtResource("14_6ogfw")
-to = NodePath("../../ThreatTurn")
+to = NodePath("../../Eat")
+event = &"OnMothChoseEat"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnMothChoseMask" type="Node" parent="StateChart/CompoundState/MothTurn/ChoosingAction" unique_id=2006555000]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../Mask")
+event = &"OnMothChoseMask"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnMothChoseAttack" type="Node" parent="StateChart/CompoundState/MothTurn/ChoosingAction" unique_id=1190602124]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../Attack")
+event = &"OnMothChoseAttack"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Eat" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=1507075644]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnMothTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn/Eat" unique_id=1403287542]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../ThreatTurn")
+event = &"OnMothTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Mask" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=679571435]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnMothTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn/Mask" unique_id=178945985]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../ThreatTurn")
+event = &"OnMothTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Attack" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=1672937765]
+script = ExtResource("11_vdykp")
+initial_state = NodePath("ChoosingAttack")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="ChoosingAttack" type="Node" parent="StateChart/CompoundState/MothTurn/Attack" unique_id=1653351839]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnMothChoseSpin" type="Node" parent="StateChart/CompoundState/MothTurn/Attack/ChoosingAttack" unique_id=1416448300]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../Spin")
+event = &"OnMothChoseSpin"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnMothChoseSpit" type="Node" parent="StateChart/CompoundState/MothTurn/Attack/ChoosingAttack" unique_id=325388643]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../Spit")
+event = &"OnMothChoseSpit"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnMothChoseWrap" type="Node" parent="StateChart/CompoundState/MothTurn/Attack/ChoosingAttack" unique_id=2091523536]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../Wrap")
+event = &"OnMothChoseWrap"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Spin" type="Node" parent="StateChart/CompoundState/MothTurn/Attack" unique_id=1146283748]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnMothTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn/Attack/Spin" unique_id=989909411]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../../ThreatTurn")
+event = &"OnMothTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Spit" type="Node" parent="StateChart/CompoundState/MothTurn/Attack" unique_id=1935260388]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnMothTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn/Attack/Spit" unique_id=1016359264]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../../ThreatTurn")
+event = &"OnMothTurnEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Wrap" type="Node" parent="StateChart/CompoundState/MothTurn/Attack" unique_id=433892779]
+script = ExtResource("12_6ogfw")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="OnMothTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn/Attack/Wrap" unique_id=1079558673]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../../ThreatTurn")
 event = &"OnMothTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
@@ -195,4 +306,13 @@ delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_entered"]
+[connection signal="state_exited" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_exited"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Eat" to="." method="_on_eat_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Mask" to="." method="_on_mask_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Attack/ChoosingAttack" to="." method="_on_choosing_attack_state_entered"]
+[connection signal="state_exited" from="StateChart/CompoundState/MothTurn/Attack/ChoosingAttack" to="." method="_on_choosing_attack_state_exited"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Attack/Spin" to="." method="_on_spin_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Attack/Spit" to="." method="_on_spit_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Attack/Wrap" to="." method="_on_wrap_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn" to="." method="_on_threat_turn_state_entered"]

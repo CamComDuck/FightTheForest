@@ -2,19 +2,19 @@
 class_name Threat
 extends Sprite2D
 
-signal OnThreatDied
+signal onThreatDied
 
 var maxHealth := 10
 var currentHealth := 10
 
-func GetHealth() -> int:
+func getHealth() -> int:
     return currentHealth
 
 
-func IncrementHealth(inc: int) -> void:
+func incrementHealth(inc: int) -> void:
     currentHealth += inc
     if currentHealth <= 0:
         # die
         print("threat died")
-        OnThreatDied.emit()
+        onThreatDied.emit()
         

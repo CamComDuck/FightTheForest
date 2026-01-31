@@ -1,7 +1,7 @@
 class_name Keybinds
 extends Node2D
 
-signal OnDirectionChosen(direction: Vector2)
+signal onDirectionChosen(direction: Vector2)
 
 func _input(_event: InputEvent):
 
@@ -19,4 +19,4 @@ func _input(_event: InputEvent):
 	elif Input.is_action_just_pressed("down"):
 		direction.y = -1
 
-	OnDirectionChosen.emit(direction)
+	onDirectionChosen.emit(direction)

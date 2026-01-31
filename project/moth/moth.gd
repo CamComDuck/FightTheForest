@@ -2,20 +2,29 @@
 class_name Moth
 extends Sprite2D
 
-signal OnMothDied
+signal onMothDied
 
 var maxHealth := 10
 var currentHealth := 10
 
-func GetHealth() -> int:
+var isMasked := false
+
+func setIsMasked(newMasked: bool) -> void:
+    isMasked = newMasked
+    
+
+func getHealth() -> int:
     return currentHealth
 
 
-func IncrementHealth(inc: int) -> void:
+func incrementHealth(inc: int) -> void:
     currentHealth += inc
     if currentHealth <= 0:
         # die
         print("moth died")
-        OnMothDied.emit()
+        onMothDied.emit()
+    
+    if currentHealth > maxHealth:
+        currentHealth = maxHealth
         
 
