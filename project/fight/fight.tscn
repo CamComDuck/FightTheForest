@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="11_vdykp"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_6ogfw"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="14_6ogfw"]
+[ext_resource type="Texture2D" uid="uid://d1772pwrja6l" path="res://icons/fire.png" id="17_v46jh"]
 
 [node name="Fight" type="Node2D" unique_id=2011946084]
 script = ExtResource("1_0cvpa")
@@ -45,6 +46,7 @@ metadata/_edit_lock_ = true
 
 [node name="Moth" parent="." unique_id=46280394 instance=ExtResource("1_akaej")]
 unique_name_in_owner = true
+z_index = 1
 position = Vector2(511, 513)
 flip_h = true
 
@@ -358,6 +360,94 @@ to = NodePath("../../MothTurn")
 event = &"OnThreatTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="AttackFireMoth" type="CPUParticles2D" parent="." unique_id=1860892088]
+unique_name_in_owner = true
+position = Vector2(638, 498)
+emitting = false
+amount = 20
+texture = ExtResource("17_v46jh")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.1
+randomness = 0.66
+emission_shape = 1
+emission_sphere_radius = 44.45
+gravity = Vector2(0, 0)
+initial_velocity_min = 1000.0
+initial_velocity_max = 1200.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+
+[node name="AttackFireThreat" type="CPUParticles2D" parent="." unique_id=2041461517]
+unique_name_in_owner = true
+z_index = 2
+position = Vector2(1173, 498)
+emitting = false
+amount = 20
+texture = ExtResource("17_v46jh")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.1
+randomness = 0.66
+emission_shape = 1
+emission_sphere_radius = 44.45
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 1000.0
+initial_velocity_max = 1200.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+
+[node name="MothBurning" type="CPUParticles2D" parent="." unique_id=639477082]
+unique_name_in_owner = true
+z_index = 2
+position = Vector2(570, 498)
+emitting = false
+amount = 20
+texture = ExtResource("17_v46jh")
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.1
+randomness = 0.66
+emission_shape = 1
+emission_sphere_radius = 44.45
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 600.0
+initial_velocity_max = 900.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+
+[node name="ThreatBurning" type="CPUParticles2D" parent="." unique_id=1045181464]
+unique_name_in_owner = true
+z_index = 2
+position = Vector2(1409, 498)
+emitting = false
+amount = 20
+texture = ExtResource("17_v46jh")
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.1
+randomness = 0.66
+emission_shape = 1
+emission_sphere_radius = 44.45
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 600.0
+initial_velocity_max = 900.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
 
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_entered"]
 [connection signal="state_exited" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_exited"]

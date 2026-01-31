@@ -36,4 +36,4 @@ func incrementBurnRounds(inc: int) -> void:
 
 
 func isBurning() -> bool:
-    return burnRoundsLeft > 0
+    return burnRoundsLeft > 0 and not isMasked

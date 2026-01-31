@@ -18,6 +18,21 @@ const transition := Tween.TRANS_BACK
 const moveAmount := 60.0
 const normDuration := .5
 
+var leftPositionStart : Vector2
+var rightPositionStart : Vector2
+var upPositionStart : Vector2
+
+var tweenControls : Tween
+
+func _ready():
+	leftPositionStart = leftControl.position
+	rightPositionStart = rightControl.position
+	upPositionStart = upControl.position
+
+
+func isTweenRunning() -> bool:
+	return tweenControls and tweenControls.is_running()
+	
 
 func setHealthMoth(health: int) -> void:
 	healthBarMoth.value = health
@@ -47,19 +62,19 @@ func setControlLabels(leftText: String, rightText: String, upText: String) -> vo
 
 
 func transitionInLabels() -> void:
-	var tweenControls := create_tween().set_parallel().set_trans(transition)
+	tweenControls = create_tween().set_parallel().set_trans(transition)
 
 	var leftFinalPosition := Vector2(
-		leftControl.global_position.x + moveAmount + leftControl.size.x,
-		leftControl.global_position.y)
+		leftPositionStart.x + moveAmount + leftControl.size.x,
+		leftPositionStart.y)
 	
 	var rightFinalPosition := Vector2(
-		rightControl.global_position.x - moveAmount - rightControl.size.x,
-		rightControl.global_position.y)
+		rightPositionStart.x - moveAmount - rightControl.size.x,
+		rightPositionStart.y)
 
 	var upFinalPosition := Vector2(
-		upControl.global_position.x,
-		upControl.global_position.y + moveAmount + upControl.size.y)
+		upPositionStart.x,
+		upPositionStart.y + moveAmount + upControl.size.y)
 
 	tweenControls.tween_property(leftControl, "global_position", leftFinalPosition, normDuration)
 	tweenControls.tween_property(rightControl, "global_position", rightFinalPosition, normDuration)
@@ -76,19 +91,19 @@ func transitionOutLabels(isStart: bool = false) -> void:
 	else:
 		duration = normDuration
 	
-	var tweenControls := create_tween().set_parallel().set_trans(transition)
+	tweenControls = create_tween().set_parallel().set_trans(transition)
 
 	var leftFinalPosition := Vector2(
-		leftControl.global_position.x - moveAmount - leftControl.size.x,
-		leftControl.global_position.y)
+		leftPositionStart.x - moveAmount - leftControl.size.x,
+		leftPositionStart.y)
 	
 	var rightFinalPosition := Vector2(
-		rightControl.global_position.x + moveAmount + rightControl.size.x,
-		rightControl.global_position.y)
+		rightPositionStart.x + moveAmount + rightControl.size.x,
+		rightPositionStart.y)
 
 	var upFinalPosition := Vector2(
-		upControl.global_position.x,
-		upControl.global_position.y - moveAmount - upControl.size.y)
+		upPositionStart.x,
+		upPositionStart.y - moveAmount - upControl.size.y)
 
 	tweenControls.tween_property(leftControl, "global_position", leftFinalPosition, duration)
 	tweenControls.tween_property(rightControl, "global_position", rightFinalPosition, duration)
