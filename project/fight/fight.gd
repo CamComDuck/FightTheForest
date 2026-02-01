@@ -35,7 +35,7 @@ const onThreatTurnEnded := "OnThreatTurnEnded"
 var isThreatTurnSkipped := false
 var isMothTurnSkipped := false
 
-var isUsingKeyboard := false
+var isUsingKeyboard := true
 
 const defaultMissChance := .3
 

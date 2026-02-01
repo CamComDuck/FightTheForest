@@ -16,7 +16,7 @@ var socketUDP : PacketPeerUDP = PacketPeerUDP.new()
 
 @onready var timer:Timer = %Timer as Timer
 
-var direction: Vector2
+var direction: Vector2 = Vector2.ZERO
 
 var isListening := false
 
@@ -25,10 +25,7 @@ func _ready() -> void:
 	
 
 func _physics_process(_delta: float) -> void:
-	if not isListening:
-		return
-
-	while socketUDP.get_available_packet_count() > 0 and isListening:
+	while socketUDP.get_available_packet_count() > 0:
 		var array_bytes : PackedByteArray = socketUDP.get_packet()
 		var array_decoded : Array[float] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 		for i in range(6):
@@ -45,31 +42,39 @@ func _physics_process(_delta: float) -> void:
 		var directionPacket = Vector2(packetInfo["x"], packetInfo["pitch"])
 		
 		var SENSITIVITY := 10.0
-		if directionPacket.x > SENSITIVITY and direction != Vector2(-1, 0): # left
-			stopAllParticles()
-			particlesLeft.emitting = true
-			direction = Vector2(-1, 0)
-			timer.start()
 
-		elif directionPacket.x < -SENSITIVITY and direction != Vector2(1, 0): # right
-			stopAllParticles()
-			particlesRight.emitting = true
-			direction = Vector2(1, 0)
-			timer.start()
-			
-		elif directionPacket.y > SENSITIVITY and direction != Vector2(0, -1): # down
-			pass
-
-		elif directionPacket.y < -SENSITIVITY and direction != Vector2(0, 1): # up
-			stopAllParticles()
-			particlesUp.emitting = true
-			direction = Vector2(0, 1)
-			timer.start()
-
-		if directionPacket.x < SENSITIVITY and directionPacket.x > -SENSITIVITY:
-			if directionPacket.y < SENSITIVITY and directionPacket.y > -SENSITIVITY:
+		if isListening:
+			if directionPacket.x > SENSITIVITY and direction != Vector2(-1, 0): # left
 				stopAllParticles()
-				timer.stop()
+				particlesLeft.emitting = true
+				direction = Vector2(-1, 0)
+				timer.start()
+
+			elif directionPacket.x < -SENSITIVITY and direction != Vector2(1, 0): # right
+				stopAllParticles()
+				particlesRight.emitting = true
+				direction = Vector2(1, 0)
+				timer.start()
+				
+			elif directionPacket.y > SENSITIVITY and direction != Vector2(0, -1): # down
+				pass
+
+			elif directionPacket.y < -SENSITIVITY and direction != Vector2(0, 1): # up
+				stopAllParticles()
+				particlesUp.emitting = true
+				direction = Vector2(0, 1)
+				timer.start()
+
+			if directionPacket.x < SENSITIVITY and directionPacket.x > -SENSITIVITY:
+				if directionPacket.y < SENSITIVITY and directionPacket.y > -SENSITIVITY:
+					stopAllParticles()
+					timer.stop()
+					direction = Vector2.ZERO
+		
+		else:
+			direction = Vector2.ZERO
+			timer.stop()
+			stopAllParticles()
 
 
 func stopAllParticles() -> void:
@@ -98,3 +103,4 @@ func _on_timer_timeout() -> void:
 	stopAllParticles()
 
 	onDirectionChosen.emit(direction)
+	direction = Vector2.ZERO
