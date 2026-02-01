@@ -35,14 +35,14 @@ var isMothTurnSkipped := false
 
 var isUsingKeyboard := true
 
-const defaultMissChance := .1
+const defaultMissChance := .3
 
-var spinMissChance := .99
-var spitMissChance := .99
-var wrapMissChance := .99
+var spinMissChance := .3
+var spitMissChance := .3
+var wrapMissChance := .3
 
-var stompMissChance := .99
-var fireMissChance := .99
+var stompMissChance := .3
+var fireMissChance := .3
 
 func _ready() -> void:
 	randomize()
@@ -174,10 +174,18 @@ func _on_spin_state_entered() -> void: # one hit
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= spinMissChance: # missed
+		spinMissChance -= .2
+		if spinMissChance < defaultMissChance:
+			spinMissChance = defaultMissChance
+
 		missOnThreatParticles.emitting = true
 		await missOnThreatParticles.finished
 
 	else: # hit
+		spinMissChance += .1
+		if spinMissChance > 1:
+			spinMissChance = 1
+
 		incrementThreatHealth(-3)
 		await fightUI.onTweenFinished
 
@@ -190,10 +198,18 @@ func _on_spit_state_entered() -> void: # burn
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= spitMissChance: # missed
+		spitMissChance -= .2
+		if spitMissChance < defaultMissChance:
+			spitMissChance = defaultMissChance
+
 		missOnThreatParticles.emitting = true
 		await missOnThreatParticles.finished
 
 	else: # hit
+		spitMissChance += .1
+		if spitMissChance > 1:
+			spitMissChance = 1
+
 		threat.incrementBurnRounds(2)
 		fightUI.addFireThreat(2)
 
@@ -206,10 +222,18 @@ func _on_wrap_state_entered() -> void: # tangle
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= wrapMissChance: # missed
+		wrapMissChance -= .2
+		if wrapMissChance < defaultMissChance:
+			wrapMissChance = defaultMissChance
+
 		missOnThreatParticles.emitting = true
 		await missOnThreatParticles.finished
 
 	else: # hit
+		wrapMissChance += .1
+		if wrapMissChance > 1:
+			wrapMissChance = 1
+
 		isThreatTurnSkipped = true
 
 		threat.startStuckAnim(true)
@@ -257,10 +281,17 @@ func _on_threat_stomp_state_entered() -> void:
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= stompMissChance: # missed
+		stompMissChance += .1
+		if stompMissChance > 1:
+			stompMissChance = 1
+
 		missOnMothParticles.emitting = true
 		await missOnMothParticles.finished
 
 	else: # hit
+		stompMissChance += .1
+		if stompMissChance > 1:
+			stompMissChance = 1
 		incrementMothHealth(-2)
 		await fightUI.onTweenFinished
 
@@ -273,10 +304,16 @@ func _on_threat_fire_state_entered() -> void:
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= fireMissChance: # missed
+		fireMissChance += .1
+		if fireMissChance > 1:
+			fireMissChance = 1
 		missOnMothParticles.emitting = true
 		await missOnMothParticles.finished
 
 	else: # hit
+		fireMissChance += .1
+		if fireMissChance > 1:
+			fireMissChance = 1
 		moth.incrementBurnRounds(2)
 		fightUI.addFireMoth(2)
 
