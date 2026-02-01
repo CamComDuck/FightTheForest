@@ -115,6 +115,8 @@ func incrementHealth(inc: int) -> void:
         
 
 func incrementBurnRounds(inc: int) -> void:
+    # print(inc)
+    # print(isMasked)
     if isMasked and inc > 0:
         return
 
@@ -122,6 +124,9 @@ func incrementBurnRounds(inc: int) -> void:
     if burnRoundsLeft < 0:
         burnRoundsLeft = 0
 
+    # print("Burnrounds: " + str(burnRoundsLeft))
+
 
 func isBurning() -> bool:
+    # print(str(burnRoundsLeft) + " - " + str(isMasked))
     return burnRoundsLeft > 0 and not isMasked

@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ubmipsi74xrh" path="res://input/keybinds.tscn" id="2_vdykp"]
 [ext_resource type="Texture2D" uid="uid://c2umoqnrswm6j" path="res://UI/labelVertical.png" id="2_yw3gg"]
 [ext_resource type="Theme" uid="uid://c1ideykdfrqst" path="res://UI/primaryTheme.tres" id="3_b28lu"]
+[ext_resource type="PackedScene" uid="uid://dwf4xw4kdyid0" path="res://sounds/Sounds.tscn" id="3_tqxqp"]
 [ext_resource type="PackedScene" uid="uid://b5chibe38txew" path="res://input/FaceTracking.tscn" id="4_0nyhb"]
 [ext_resource type="PackedScene" uid="uid://3uylcggns17x" path="res://threat/threat.tscn" id="4_4wrhi"]
 [ext_resource type="Texture2D" uid="uid://c77amhgf26gaa" path="res://UI/button wider clicked.png" id="5_akaej"]
@@ -35,6 +36,9 @@ grow_horizontal = 1
 grow_vertical = 1
 enabled = false
 initial_node_to_watch = NodePath("../StateChart")
+
+[node name="Sounds" parent="." unique_id=1689075691 instance=ExtResource("3_tqxqp")]
+unique_name_in_owner = true
 
 [node name="Keybinds" parent="." unique_id=393991047 instance=ExtResource("2_vdykp")]
 unique_name_in_owner = true

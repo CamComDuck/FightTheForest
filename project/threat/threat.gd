@@ -2,6 +2,7 @@
 class_name Threat
 extends Sprite2D
 
+signal onReadyForSound()
 signal onTweenFinished()
 
 const maxHealth := 15
@@ -41,6 +42,7 @@ func startStompAnim(mothPosition: Vector2) -> void:
 	currentTween = create_tween().set_trans(Tween.TRANS_BACK)
 	currentTween.tween_property(self, "position", mothPosition, 0.3)
 	await currentTween.finished
+	onReadyForSound.emit()
 
 	currentTween = create_tween().set_parallel().set_trans(Tween.TRANS_BACK)
 	currentTween.tween_property(self, "position", startPosition, 0.3)

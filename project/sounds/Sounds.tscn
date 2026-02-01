@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://dwf4xw4kdyid0"]
+
+[ext_resource type="Script" uid="uid://tuh0tlxagdbv" path="res://sounds/sounds.gd" id="1_aop4o"]
+[ext_resource type="AudioStream" uid="uid://dgd2eys76ol87" path="res://sounds/burning.wav" id="2_j4cl0"]
+[ext_resource type="AudioStream" uid="uid://0d6ocxlgmotn" path="res://sounds/eat.wav" id="3_u00bs"]
+[ext_resource type="AudioStream" uid="uid://bt2xyr7sc662a" path="res://sounds/fireAttack.wav" id="4_l7ukr"]
+[ext_resource type="AudioStream" uid="uid://drrls8qwl67xg" path="res://sounds/lose.wav" id="5_4msd6"]
+[ext_resource type="AudioStream" uid="uid://c4gtj3lvywiij" path="res://sounds/mask.wav" id="6_5sgbp"]
+[ext_resource type="AudioStream" uid="uid://dvs0h1m46463e" path="res://sounds/miss.wav" id="7_ndao5"]
+[ext_resource type="AudioStream" uid="uid://b34babmno2irl" path="res://sounds/spin.wav" id="8_ucbbd"]
+[ext_resource type="AudioStream" uid="uid://didu7wt7vwoye" path="res://sounds/spit.wav" id="9_jqpag"]
+[ext_resource type="AudioStream" uid="uid://1p0ja51cnqfg" path="res://sounds/stomp.wav" id="10_51g14"]
+[ext_resource type="AudioStream" uid="uid://brva5rjwlpq66" path="res://sounds/win.wav" id="11_ubf2w"]
+[ext_resource type="AudioStream" uid="uid://dwsu0oqnvr6ff" path="res://sounds/wrap.wav" id="12_rjx55"]
+[ext_resource type="AudioStream" uid="uid://ehtvgk70j7cf" path="res://sounds/landed.wav" id="13_j4cl0"]
+
+[node name="Sounds" type="Node2D" unique_id=1689075691]
+script = ExtResource("1_aop4o")
+
+[node name="Burning" type="AudioStreamPlayer" parent="." unique_id=299707570]
+unique_name_in_owner = true
+stream = ExtResource("2_j4cl0")
+
+[node name="Eat" type="AudioStreamPlayer" parent="." unique_id=1923845603]
+unique_name_in_owner = true
+stream = ExtResource("3_u00bs")
+
+[node name="FireAttack" type="AudioStreamPlayer" parent="." unique_id=67687967]
+unique_name_in_owner = true
+stream = ExtResource("4_l7ukr")
+
+[node name="Lose" type="AudioStreamPlayer" parent="." unique_id=1326907996]
+unique_name_in_owner = true
+stream = ExtResource("5_4msd6")
+
+[node name="Mask" type="AudioStreamPlayer" parent="." unique_id=221619952]
+unique_name_in_owner = true
+stream = ExtResource("6_5sgbp")
+
+[node name="Miss" type="AudioStreamPlayer" parent="." unique_id=1227244733]
+unique_name_in_owner = true
+stream = ExtResource("7_ndao5")
+
+[node name="Spin" type="AudioStreamPlayer" parent="." unique_id=1313292258]
+unique_name_in_owner = true
+stream = ExtResource("8_ucbbd")
+
+[node name="Spit" type="AudioStreamPlayer" parent="." unique_id=1417213588]
+unique_name_in_owner = true
+stream = ExtResource("9_jqpag")
+
+[node name="Stomp" type="AudioStreamPlayer" parent="." unique_id=1733466513]
+unique_name_in_owner = true
+stream = ExtResource("10_51g14")
+
+[node name="Win" type="AudioStreamPlayer" parent="." unique_id=326502431]
+unique_name_in_owner = true
+stream = ExtResource("11_ubf2w")
+
+[node name="Wrap" type="AudioStreamPlayer" parent="." unique_id=1619874525]
+unique_name_in_owner = true
+stream = ExtResource("12_rjx55")
+
+[node name="Landed" type="AudioStreamPlayer" parent="." unique_id=1209196998]
+stream = ExtResource("13_j4cl0")

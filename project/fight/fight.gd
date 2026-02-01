@@ -8,6 +8,7 @@ extends Node2D
 @onready var threat: Threat = %Threat as Threat
 @onready var stateChart:StateChart = %StateChart as StateChart
 @onready var fightUI:FightUI = %FightUI as FightUI
+@onready var sounds:Sounds = %Sounds as Sounds
 
 @onready var attackFireMothParticles:CPUParticles2D = %AttackFireMoth as CPUParticles2D
 @onready var attackFireThreatParticles:CPUParticles2D = %AttackFireThreat as CPUParticles2D
@@ -112,11 +113,14 @@ func _on_choosing_action_state_entered() -> void:
 	fightUI.setControlLabels("Eat", "Mask", "Attack", false)
 
 	if moth.isBurning():
+		sounds.PlaySound("Burning")
 		mothBurnParticles.emitting = true
 		await mothBurnParticles.finished
 
 		incrementMothHealth(-1)
 		await fightUI.onTweenFinished
+
+		checkGameEnded()
 
 	moth.incrementBurnRounds(-1)
 	fightUI.removeFireMoth(1)
@@ -153,9 +157,11 @@ func _on_choosing_action_state_exited() -> void:
 
 
 func _on_eat_state_entered() -> void:
+	sounds.PlaySound("Eat")
 	moth.startEatAnim()
 	await moth.onTweenFinished
 
+	
 	incrementMothHealth(1)
 	await fightUI.onTweenFinished
 
@@ -163,6 +169,7 @@ func _on_eat_state_entered() -> void:
 
 
 func _on_mask_state_entered() -> void:
+	sounds.PlaySound("Mask")
 	moth.setIsMasked(true)
 	await moth.onTweenFinished
 
@@ -196,6 +203,7 @@ func _on_choosing_attack_state_exited() -> void:
 
 
 func _on_spin_state_entered() -> void: # one hit
+	sounds.PlaySound("Spin")
 	moth.startSpinAnim()
 	await moth.onTweenFinished
 
@@ -205,6 +213,7 @@ func _on_spin_state_entered() -> void: # one hit
 		if spinMissChance < defaultMissChance:
 			spinMissChance = defaultMissChance
 
+		sounds.PlaySound("Miss")
 		missOnThreatParticles.emitting = true
 		await missOnThreatParticles.finished
 
@@ -220,11 +229,13 @@ func _on_spin_state_entered() -> void: # one hit
 
 
 func _on_spit_state_entered() -> void: # burn
+	sounds.PlaySound("Spit")
 	attackFireMothParticles.emitting = true
 	await attackFireMothParticles.finished
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= spitMissChance: # missed
+		sounds.PlaySound("Miss")
 		spitMissChance -= .2
 		if spitMissChance < defaultMissChance:
 			spitMissChance = defaultMissChance
@@ -244,11 +255,13 @@ func _on_spit_state_entered() -> void: # burn
 
 
 func _on_wrap_state_entered() -> void: # tangle
+	sounds.PlaySound("Wrap")
 	moth.startWrapAnim(threat.position)
 	await moth.onTweenFinished
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= wrapMissChance: # missed
+		sounds.PlaySound("Miss")
 		wrapMissChance -= .2
 		if wrapMissChance < defaultMissChance:
 			wrapMissChance = defaultMissChance
@@ -274,6 +287,7 @@ func _on_wrap_state_entered() -> void: # tangle
 
 func _on_threat_choosing_attack_state_entered() -> void:
 	if threat.isBurning():
+		sounds.PlaySound("Burning")
 		threat.incrementBurnRounds(-1)
 		fightUI.removeFireThreat(1)
 
@@ -282,6 +296,8 @@ func _on_threat_choosing_attack_state_entered() -> void:
 
 		incrementThreatHealth(-2)
 		await fightUI.onTweenFinished
+
+		checkGameEnded()
 
 
 	if isThreatTurnSkipped: # no action
@@ -303,14 +319,19 @@ func _on_threat_choosing_attack_state_entered() -> void:
 
 
 func _on_threat_stomp_state_entered() -> void:
+	sounds.PlaySound("Stomp")
 	threat.startStompAnim(moth.position)
+	await threat.onReadyForSound
+	sounds.PlaySound("Landed")
+
 	await threat.onTweenFinished
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= stompMissChance: # missed
-		stompMissChance += .1
-		if stompMissChance > 1:
-			stompMissChance = 1
+		sounds.PlaySound("Miss")
+		stompMissChance -= .2
+		if stompMissChance < defaultMissChance:
+			stompMissChance = defaultMissChance
 
 		missOnMothParticles.emitting = true
 		await missOnMothParticles.finished
@@ -326,14 +347,16 @@ func _on_threat_stomp_state_entered() -> void:
 
 
 func _on_threat_fire_state_entered() -> void:
+	sounds.PlaySound("FireAttack")
 	attackFireThreatParticles.emitting = true
 	await attackFireThreatParticles.finished
 
 	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
 	if randomNum <= fireMissChance: # missed
-		fireMissChance += .1
-		if fireMissChance > 1:
-			fireMissChance = 1
+		sounds.PlaySound("Miss")
+		fireMissChance -= .2
+		if fireMissChance < defaultMissChance:
+			fireMissChance = defaultMissChance
 		missOnMothParticles.emitting = true
 		await missOnMothParticles.finished
 
@@ -351,10 +374,12 @@ func _on_threat_fire_state_entered() -> void:
 
 func checkGameEnded() -> void:
 	if moth.getHealth() <= 0: # lose fight
+		sounds.PlaySound("Lose")
 		print("you lose!")
 		get_tree().quit()
 
 	if threat.getHealth() <= 0: # win fight
+		sounds.PlaySound("Win")
 		print("you win!")
 		get_tree().quit()
 

@@ -39,6 +39,7 @@ folder_colors={
 "res://icons/": "yellow",
 "res://input/": "purple",
 "res://moth/": "yellow",
+"res://sounds/": "purple",
 "res://threat/": "yellow",
 "res://title/": "orange"
 }
