@@ -48,13 +48,13 @@ func _physics_process(_delta: float) -> void:
 				stopAllParticles()
 				particlesLeft.emitting = true
 				direction = Vector2(-1, 0)
-				timer.start()
+				timer.start(GlobalInfo.faceDelaySeconds)
 
 			elif directionPacket.x < -SENSITIVITY and direction != Vector2(1, 0): # right
 				stopAllParticles()
 				particlesRight.emitting = true
 				direction = Vector2(1, 0)
-				timer.start()
+				timer.start(GlobalInfo.faceDelaySeconds)
 				
 			elif directionPacket.y > SENSITIVITY and direction != Vector2(0, -1): # down
 				pass
@@ -63,7 +63,7 @@ func _physics_process(_delta: float) -> void:
 				stopAllParticles()
 				particlesUp.emitting = true
 				direction = Vector2(0, 1)
-				timer.start()
+				timer.start(GlobalInfo.faceDelaySeconds)
 
 			if directionPacket.x < SENSITIVITY and directionPacket.x > -SENSITIVITY:
 				if directionPacket.y < SENSITIVITY and directionPacket.y > -SENSITIVITY:

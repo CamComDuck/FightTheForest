@@ -11,11 +11,15 @@ config_version=5
 [application]
 
 config/name="FightTheForest"
-run/main_scene="uid://o4ymgjw4x2hx"
+run/main_scene="uid://igoriet6db7m"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/use_filter=false
 config/icon="uid://cv7inc6eqbfjh"
+
+[autoload]
+
+GlobalInfo="*uid://bmxalqohxm8kr"
 
 [display]
 
@@ -34,7 +38,7 @@ folder_colors={
 "res://UI/": "green",
 "res://addons/": "red",
 "res://fight/": "orange",
-"res://forest/": "orange",
+"res://globalInfo/": "purple",
 "res://godot_state_charts_examples/": "red",
 "res://icons/": "yellow",
 "res://input/": "purple",

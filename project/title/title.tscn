@@ -1,14 +1,21 @@
 [gd_scene format=3 uid="uid://igoriet6db7m"]
 
-[ext_resource type="AudioStream" uid="uid://cx0ka5k8ob05l" path="res://sounds/Fight The Forest_Forest Explore_v1_01-31-26.wav" id="1_yx5l7"]
+[ext_resource type="Script" uid="uid://bm3o8qgwo7dbd" path="res://title/title.gd" id="1_6s8lb"]
+[ext_resource type="AudioStream" uid="uid://de8lwusyv0o8p" path="res://title/TitleMusic.wav" id="2_8xu2e"]
 [ext_resource type="Texture2D" uid="uid://bcasm2qhk108q" path="res://fight/background.png" id="2_nx56k"]
 [ext_resource type="Theme" uid="uid://c1ideykdfrqst" path="res://UI/primaryTheme.tres" id="3_6s8lb"]
+[ext_resource type="AudioStream" uid="uid://sxsbkhxp6nya" path="res://title/select_3.wav" id="3_8xu2e"]
 
 [node name="Title" type="Node2D" unique_id=152612656]
+script = ExtResource("1_6s8lb")
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1167697077]
-stream = ExtResource("1_yx5l7")
+stream = ExtResource("2_8xu2e")
 autoplay = true
+
+[node name="Click" type="AudioStreamPlayer" parent="." unique_id=1940176507]
+unique_name_in_owner = true
+stream = ExtResource("3_8xu2e")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=2010754550]
 z_index = -100
@@ -25,6 +32,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("3_6s8lb")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=572396561]
 layout_mode = 0
@@ -83,3 +91,200 @@ text = "Credits"
 [node name="Spacer2" type="Control" parent="UI/MarginContainer/VBoxContainer" unique_id=2035966797]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1435009863]
+layout_mode = 2
+text = "Created For Global Game Jam 2026"
+horizontal_alignment = 2
+
+[node name="InputContainer" type="PanelContainer" parent="UI" unique_id=2100625094]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/InputContainer" unique_id=1942560427]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/InputContainer/MarginContainer" unique_id=983590850]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/InputContainer/MarginContainer/VBoxContainer" unique_id=2002655868]
+layout_mode = 2
+theme_override_font_sizes/font_size = 150
+text = "Input Settings"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="UI/InputContainer/MarginContainer/VBoxContainer" unique_id=1129199624]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/InputContainer/MarginContainer/VBoxContainer" unique_id=1020739721]
+layout_mode = 2
+
+[node name="FaceTrackingCheckBox" type="CheckBox" parent="UI/InputContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=409599415]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Use Face Tracking As Input"
+alignment = 1
+
+[node name="Label2" type="Label" parent="UI/InputContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=16506882]
+layout_mode = 2
+text = "*uses Keyboard (Arrows or WASD) if face tracking is disabled"
+horizontal_alignment = 2
+
+[node name="Spacer3" type="Control" parent="UI/InputContainer/MarginContainer/VBoxContainer" unique_id=1438367891]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="UI/InputContainer/MarginContainer/VBoxContainer" unique_id=635111768]
+layout_mode = 2
+text = "Face Tracking Delay"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/InputContainer/MarginContainer/VBoxContainer" unique_id=104751668]
+layout_mode = 2
+
+[node name="DelaySlider" type="HSlider" parent="UI/InputContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=98633098]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 5.0
+step = 0.5
+value = 2.0
+
+[node name="SecsLabel" type="Label" parent="UI/InputContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=825433276]
+unique_name_in_owner = true
+layout_mode = 2
+text = "2.0 Seconds"
+
+[node name="Spacer2" type="Control" parent="UI/InputContainer/MarginContainer/VBoxContainer" unique_id=836342965]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="UI/InputContainer/MarginContainer" unique_id=1246399060]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Back"
+
+[node name="StoryContainer" type="PanelContainer" parent="UI" unique_id=652885372]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/StoryContainer" unique_id=216634215]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/StoryContainer/MarginContainer" unique_id=1750967110]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/StoryContainer/MarginContainer/VBoxContainer" unique_id=60104313]
+layout_mode = 2
+theme_override_font_sizes/font_size = 150
+text = "Story"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="UI/StoryContainer/MarginContainer/VBoxContainer" unique_id=1438922104]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="UI/StoryContainer/MarginContainer/VBoxContainer" unique_id=992848145]
+custom_minimum_size = Vector2(1000, 10)
+layout_mode = 2
+text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Spacer2" type="Control" parent="UI/StoryContainer/MarginContainer/VBoxContainer" unique_id=1125920981]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="UI/StoryContainer/MarginContainer" unique_id=1867309923]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Back"
+
+[node name="CreditsContainer" type="PanelContainer" parent="UI" unique_id=266323171]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/CreditsContainer" unique_id=1067095478]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CreditsContainer/MarginContainer" unique_id=1973446811]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/CreditsContainer/MarginContainer/VBoxContainer" unique_id=1462468213]
+layout_mode = 2
+theme_override_font_sizes/font_size = 150
+text = "Credits"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="UI/CreditsContainer/MarginContainer/VBoxContainer" unique_id=363456861]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/CreditsContainer/MarginContainer/VBoxContainer" unique_id=340488121]
+layout_mode = 2
+theme = ExtResource("3_6s8lb")
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 50
+theme_override_font_sizes/bold_italics_font_size = 50
+theme_override_font_sizes/italics_font_size = 50
+theme_override_font_sizes/mono_font_size = 50
+bbcode_enabled = true
+text = "[color=yellow]Programmer & Designer:[/color] Camden Hovell
+
+[color=yellow]Music Composer:[/color] Marc Uddo
+
+[color=yellow]Graphics & Sounds:[/color] Purchased from [color=lightblue]ci.itch.io/all-game-assets[/color]
+
+[color=yellow]Font:[/color] \"Candy Town\" Purchased from [color=lightblue]ci.itch.io/all-fonts-pack[/color]
+
+[color=yellow]Caterpillar Image:[/color] [color=lightblue]https://www.envite.org.au/projects/southern-pink-underwing-moth-habitat-restoration/[/color]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="UI/CreditsContainer/MarginContainer/VBoxContainer" unique_id=548044972]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="UI/CreditsContainer/MarginContainer" unique_id=2083483815]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Back"
+
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/HBoxContainer/InputButton" to="." method="_on_input_button_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/HBoxContainer/StoryButton" to="." method="_on_story_button_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="toggled" from="UI/InputContainer/MarginContainer/VBoxContainer/VBoxContainer/FaceTrackingCheckBox" to="." method="_on_face_tracking_check_toggled"]
+[connection signal="drag_ended" from="UI/InputContainer/MarginContainer/VBoxContainer/HBoxContainer/DelaySlider" to="." method="_on_delay_slider_drag_ended"]
+[connection signal="value_changed" from="UI/InputContainer/MarginContainer/VBoxContainer/HBoxContainer/DelaySlider" to="." method="_on_delay_slider_value_changed"]
+[connection signal="pressed" from="UI/InputContainer/MarginContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="UI/StoryContainer/MarginContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="UI/CreditsContainer/MarginContainer/BackButton" to="." method="_on_back_button_pressed"]

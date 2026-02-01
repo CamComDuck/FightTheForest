@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="1_6ogfw"]
 [ext_resource type="PackedScene" uid="uid://6wlo13b8vqqw" path="res://moth/moth.tscn" id="1_akaej"]
 [ext_resource type="Texture2D" uid="uid://bcasm2qhk108q" path="res://fight/background.png" id="1_wldmm"]
+[ext_resource type="AudioStream" uid="uid://bnvpgo4nc32ye" path="res://fight/FightMusic.wav" id="2_62p11"]
 [ext_resource type="PackedScene" uid="uid://ubmipsi74xrh" path="res://input/keybinds.tscn" id="2_vdykp"]
 [ext_resource type="Texture2D" uid="uid://c2umoqnrswm6j" path="res://UI/labelVertical.png" id="2_yw3gg"]
 [ext_resource type="Theme" uid="uid://c1ideykdfrqst" path="res://UI/primaryTheme.tres" id="3_b28lu"]
@@ -24,6 +25,10 @@
 
 [node name="Fight" type="Node2D" unique_id=2011946084]
 script = ExtResource("1_0cvpa")
+
+[node name="FightMusic" type="AudioStreamPlayer" parent="." unique_id=931642710]
+stream = ExtResource("2_62p11")
+autoplay = true
 
 [node name="StateChartDebugger" parent="." unique_id=599595517 instance=ExtResource("1_6ogfw")]
 visible = false

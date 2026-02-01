@@ -36,8 +36,6 @@ const onThreatTurnEnded := "OnThreatTurnEnded"
 var isThreatTurnSkipped := false
 var isMothTurnSkipped := false
 
-var isUsingKeyboard := true
-
 const defaultMissChance := .3
 
 var spinMissChance := .3
@@ -135,7 +133,7 @@ func _on_choosing_action_state_entered() -> void:
 	else:
 		await fightUI.onTweenFinished
 
-	if isUsingKeyboard:
+	if GlobalInfo.usingKeyboard:
 		if not keybinds.is_connected("onDirectionChosen", onActionChosen):
 			keybinds.connect("onDirectionChosen", onActionChosen)
 	
@@ -146,7 +144,7 @@ func _on_choosing_action_state_entered() -> void:
 
 
 func _on_choosing_action_state_exited() -> void:
-	if isUsingKeyboard:
+	if GlobalInfo.usingKeyboard:
 		if keybinds.is_connected("onDirectionChosen", onActionChosen):
 			keybinds.disconnect("onDirectionChosen", onActionChosen)
 
@@ -185,7 +183,7 @@ func _on_choosing_attack_state_entered() -> void:
 	else:
 		await fightUI.onTweenFinished
 
-	if isUsingKeyboard:
+	if GlobalInfo.usingKeyboard:
 		keybinds.connect("onDirectionChosen", onAttackChosen)
 	
 	else:
@@ -194,7 +192,7 @@ func _on_choosing_attack_state_entered() -> void:
 
 
 func _on_choosing_attack_state_exited() -> void:
-	if isUsingKeyboard:
+	if GlobalInfo.usingKeyboard:
 		keybinds.disconnect("onDirectionChosen", onAttackChosen)
 
 	else:

@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bt3x557ix77x2" path="res://title/button wide hover.png" id="1_gtbhq"]
 [ext_resource type="Texture2D" uid="uid://bwphj03fa8yrr" path="res://title/button wide idle.png" id="2_pcw0k"]
 [ext_resource type="Texture2D" uid="uid://b164pgdkd0sdf" path="res://title/button wide clicked.png" id="3_d1wkr"]
+[ext_resource type="Texture2D" uid="uid://bdjwyvfwej47r" path="res://title/checkbox tick.png" id="4_d1wkr"]
+[ext_resource type="Texture2D" uid="uid://1ptg48rbi6ff" path="res://title/checkbox cross.png" id="5_k7wvj"]
+[ext_resource type="Texture2D" uid="uid://cyjy88lmdxh8t" path="res://title/scrollbar slider.png" id="6_bspk3"]
+[ext_resource type="Texture2D" uid="uid://caopvu7t5gic5" path="res://title/scrollbar horizontal.png" id="7_3sk6t"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k7wvj"]
 texture = ExtResource("1_gtbhq")
@@ -47,6 +51,20 @@ texture_margin_top = 25.0
 texture_margin_right = 25.0
 texture_margin_bottom = 25.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bspk3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sk6t"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dwqai"]
+texture = ExtResource("7_3sk6t")
+texture_margin_left = 25.0
+texture_margin_top = 25.0
+texture_margin_right = 25.0
+texture_margin_bottom = 25.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gtbhq"]
+bg_color = Color(0.47843137, 0.47843137, 0.47843137, 0.93333334)
+
 [resource]
 default_font = ExtResource("1_317tv")
 Button/colors/font_color = Color(0, 0, 0, 1)
@@ -60,8 +78,19 @@ Button/styles/hover_pressed = SubResource("StyleBoxTexture_3sk6t")
 Button/styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_1c6mb")
 Button/styles/normal = SubResource("StyleBoxTexture_u56kl")
 Button/styles/pressed = SubResource("StyleBoxTexture_hlltq")
+CheckBox/icons/checked = ExtResource("4_d1wkr")
+CheckBox/icons/unchecked = ExtResource("5_k7wvj")
+HSlider/icons/grabber = ExtResource("6_bspk3")
+HSlider/icons/grabber_highlight = ExtResource("6_bspk3")
+HSlider/styles/grabber_area = SubResource("StyleBoxEmpty_bspk3")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_3sk6t")
+HSlider/styles/slider = SubResource("StyleBoxTexture_dwqai")
 Label/font_sizes/font_size = 50
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
+OptionButton/colors/font_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_hover_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_pressed_color = Color(0, 0, 0, 1)
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_gtbhq")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8yqpfwcnlkbt"
-path="res://.godot/imported/background.png-1c569aa4c66f1b02a82b1144a29bff5a.ctex"
+uid="uid://cyjy88lmdxh8t"
+path="res://.godot/imported/scrollbar slider.png-5d69b761a7d44fc4b63162a6832ad711.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://forest/background.png"
-dest_files=["res://.godot/imported/background.png-1c569aa4c66f1b02a82b1144a29bff5a.ctex"]
+source_file="res://title/scrollbar slider.png"
+dest_files=["res://.godot/imported/scrollbar slider.png-5d69b761a7d44fc4b63162a6832ad711.ctex"]
 
 [params]
 
