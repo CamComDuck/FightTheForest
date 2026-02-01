@@ -23,7 +23,6 @@
 script = ExtResource("1_0cvpa")
 
 [node name="StateChartDebugger" parent="." unique_id=599595517 instance=ExtResource("1_6ogfw")]
-visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -31,7 +30,6 @@ offset_right = 500.0
 offset_bottom = 500.0
 grow_horizontal = 1
 grow_vertical = 1
-enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="Keybinds" parent="." unique_id=393991047 instance=ExtResource("2_vdykp")]
@@ -49,11 +47,11 @@ metadata/_edit_lock_ = true
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(511, 513)
-flip_h = true
 
 [node name="Threat" parent="." unique_id=480288523 instance=ExtResource("4_4wrhi")]
 unique_name_in_owner = true
-position = Vector2(1403, 533)
+z_index = 2
+position = Vector2(1403, 530.195)
 
 [node name="FightUI" type="Control" parent="." unique_id=779417414]
 unique_name_in_owner = true
@@ -211,13 +209,6 @@ script = ExtResource("11_vdykp")
 initial_state = NodePath("ChoosingAction")
 metadata/_custom_type_script = "uid://jk2jm1g6q853"
 
-[node name="OnMothTurnEnded" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=1993858549]
-script = ExtResource("14_6ogfw")
-to = NodePath("../../ThreatTurn")
-event = &"OnMothTurnEnded"
-delay_in_seconds = "0.0"
-metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
-
 [node name="ChoosingAction" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=519937630]
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
@@ -337,10 +328,10 @@ metadata/_custom_type_script = "uid://jk2jm1g6q853"
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="OnThreatChoseEat" type="Node" parent="StateChart/CompoundState/ThreatTurn/ChoosingAttack" unique_id=1686260127]
+[node name="OnThreatChoseStomp" type="Node" parent="StateChart/CompoundState/ThreatTurn/ChoosingAttack" unique_id=1686260127]
 script = ExtResource("14_6ogfw")
-to = NodePath("../../Eat")
-event = &"OnThreatChoseEat"
+to = NodePath("../../Stomp")
+event = &"OnThreatChoseStomp"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
@@ -358,11 +349,11 @@ event = &"OnThreatTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
-[node name="Eat" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=937128868]
+[node name="Stomp" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=937128868]
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn/Eat" unique_id=1687568655]
+[node name="OnThreatTurnEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn/Stomp" unique_id=1687568655]
 script = ExtResource("14_6ogfw")
 to = NodePath("../../../MothTurn")
 event = &"OnThreatTurnEnded"
@@ -469,7 +460,6 @@ angular_velocity_max = 30.0
 scale_amount_min = 0.1
 scale_amount_max = 0.3
 
-[connection signal="state_entered" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_entered"]
 [connection signal="state_exited" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_exited"]
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_entered"]
 [connection signal="state_exited" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_exited"]
@@ -482,5 +472,5 @@ scale_amount_max = 0.3
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn/Attack/Wrap" to="." method="_on_wrap_state_entered"]
 [connection signal="state_exited" from="StateChart/CompoundState/ThreatTurn" to="." method="_on_threat_turn_state_exited"]
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/ChoosingAttack" to="." method="_on_threat_choosing_attack_state_entered"]
-[connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/Eat" to="." method="_on_threat_eat_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/Stomp" to="." method="_on_threat_stomp_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/Fire" to="." method="_on_threat_fire_state_entered"]

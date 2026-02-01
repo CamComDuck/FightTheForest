@@ -21,7 +21,7 @@ const onMothChoseSpin := "OnMothChoseSpin"
 const onMothChoseSpit := "OnMothChoseSpit"
 const onMothChoseWrap := "OnMothChoseWrap"
 
-const onThreatChoseEat := "OnThreatChoseEat"
+const onThreatChoseStomp := "OnThreatChoseStomp"
 const onThreatChoseFire := "OnThreatChoseFire"
 
 const onMothTurnEnded := "OnMothTurnEnded"
@@ -87,21 +87,8 @@ func incrementMothHealth(inc: int) -> void:
 	fightUI.setHealthMoth(moth.getHealth())
 
 
-func _on_moth_turn_state_entered() -> void:
-	if isMothTurnSkipped: # no action
-		print("moth turn skipped!")
-		isMothTurnSkipped = false
-		stateChart.send_event(onMothTurnEnded)
-
-	else: # await player choosing action
-		pass
-
-
 func _on_choosing_action_state_entered() -> void:
 	fightUI.setControlLabels("Eat", "Mask", "Attack")
-
-	moth.incrementBurnRounds(-1)
-	fightUI.removeFireMoth(1)
 
 	if moth.isBurning():
 		mothBurnParticles.emitting = true
@@ -109,6 +96,9 @@ func _on_choosing_action_state_entered() -> void:
 
 		incrementMothHealth(-1)
 		await fightUI.onTweenFinished
+
+	moth.incrementBurnRounds(-1)
+	fightUI.removeFireMoth(1)
 
 	if moth.isMasked:
 		moth.setIsMasked(false)
@@ -135,7 +125,7 @@ func _on_eat_state_entered() -> void:
 	moth.startEatAnim()
 	await moth.onTweenFinished
 
-	incrementMothHealth(2)
+	incrementMothHealth(1)
 	await fightUI.onTweenFinished
 
 	stateChart.send_event(onMothTurnEnded)
@@ -192,6 +182,9 @@ func _on_wrap_state_entered() -> void: # tangle
 	moth.startWrapAnim(threat.position)
 	await moth.onTweenFinished
 
+	threat.startStuckAnim(true)
+	await threat.onTweenFinished
+
 	incrementThreatHealth(-1)
 	await fightUI.onTweenFinished
 
@@ -206,28 +199,32 @@ func _on_threat_choosing_attack_state_entered() -> void:
 		threatBurnParticles.emitting = true
 		await threatBurnParticles.finished
 
-		incrementThreatHealth(-1)
+		incrementThreatHealth(-2)
 		await fightUI.onTweenFinished
 
 
 	if isThreatTurnSkipped: # no action
-		print("threat turn skipped!")
 		isThreatTurnSkipped = false
+
+		threat.startStuckAnim(false)
+		await threat.onTweenFinished
 		
 		stateChart.send_event(onThreatTurnEnded)
 	
 	else:
 		var randomNum = randi_range(1, 10) # 1 to 10 inclusive
 
-		if randomNum <= 6: # chose eat
-			stateChart.send_event(onThreatChoseEat)
+		if randomNum <= 6: # chose stomp
+			stateChart.send_event(onThreatChoseStomp)
 		
 		else: # chose fire
 			stateChart.send_event(onThreatChoseFire)
 
 
-func _on_threat_eat_state_entered() -> void:
-	print("threat eats moth!")
+func _on_threat_stomp_state_entered() -> void:
+	threat.startStompAnim(moth.position)
+	await threat.onTweenFinished
+
 	incrementMothHealth(-2)
 	await fightUI.onTweenFinished
 	stateChart.send_event(onThreatTurnEnded)

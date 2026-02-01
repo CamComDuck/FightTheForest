@@ -2,7 +2,39 @@
 
 [ext_resource type="Texture2D" uid="uid://wefy73qig2xl" path="res://threat/tree.png" id="1_n3pjp"]
 [ext_resource type="Script" uid="uid://47r70u4b4wfs" path="res://threat/threat.gd" id="2_805tw"]
+[ext_resource type="Texture2D" uid="uid://c68iy0d1sc3sr" path="res://threat/moss.png" id="3_805tw"]
 
-[node name="Threat" type="Sprite2D" unique_id=480288523]
+[node name="Threat" type="Sprite2D" unique_id=480288523 node_paths=PackedStringArray("mosses")]
 texture = ExtResource("1_n3pjp")
 script = ExtResource("2_805tw")
+mosses = [NodePath("Moss1"), NodePath("Moss2"), NodePath("Moss3"), NodePath("Moss4"), NodePath("Moss5"), NodePath("Moss6")]
+
+[node name="Moss1" type="Sprite2D" parent="." unique_id=869753084]
+position = Vector2(193, 145)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("3_805tw")
+
+[node name="Moss2" type="Sprite2D" parent="." unique_id=1790536604]
+position = Vector2(-211, 86)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("3_805tw")
+
+[node name="Moss3" type="Sprite2D" parent="." unique_id=616307298]
+position = Vector2(-86, -182)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("3_805tw")
+
+[node name="Moss4" type="Sprite2D" parent="." unique_id=830699738]
+position = Vector2(-50, 191)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("3_805tw")
+
+[node name="Moss5" type="Sprite2D" parent="." unique_id=1610899383]
+position = Vector2(44, -20)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("3_805tw")
+
+[node name="Moss6" type="Sprite2D" parent="." unique_id=1358262990]
+position = Vector2(208, -206)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("3_805tw")

@@ -35,7 +35,6 @@ func startEatAnim() -> void:
         await currentTween.finished
 
     foodSprite.visible = false
-    mothSprite.rotation_degrees = start_rotation
 
     onTweenFinished.emit()
 
@@ -57,8 +56,11 @@ func startSpinAnim() -> void:
 func startWrapAnim(threatPosition: Vector2) -> void:
     currentTween = create_tween().set_trans(Tween.TRANS_BACK)
     var startRotation := mothSprite.rotation
-    var startPosition := mothSprite.position
+    var startPosition := mothSprite.global_position
     var spinFinalPosition := 360.0
+    var startZ := self.z_index
+
+    self.z_index = 5
 	
     currentTween.tween_property(mothSprite, "global_position", threatPosition, 1.0)
     await currentTween.finished
@@ -72,7 +74,9 @@ func startWrapAnim(threatPosition: Vector2) -> void:
     currentTween = create_tween().set_trans(Tween.TRANS_BACK)
     currentTween.tween_property(mothSprite, "global_position", startPosition, 1.0)
     await currentTween.finished
+
     mothSprite.flip_h = not mothSprite.flip_h
+    self.z_index = startZ
 
     onTweenFinished.emit()
 
@@ -111,7 +115,7 @@ func incrementHealth(inc: int) -> void:
         
 
 func incrementBurnRounds(inc: int) -> void:
-    if isMasked:
+    if isMasked and inc > 0:
         return
 
     burnRoundsLeft += inc
