@@ -23,6 +23,9 @@
 [ext_resource type="Texture2D" uid="uid://d1772pwrja6l" path="res://icons/fire.png" id="17_v46jh"]
 [ext_resource type="Texture2D" uid="uid://b1a5j18oqem13" path="res://icons/miss.png" id="18_5rwek"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62p11"]
+bg_color = Color(0.17254902, 0.17254902, 0.17254902, 0.7254902)
+
 [node name="Fight" type="Node2D" unique_id=2011946084]
 script = ExtResource("1_0cvpa")
 
@@ -71,12 +74,14 @@ position = Vector2(1403, 530.195)
 
 [node name="FightUI" type="Control" parent="." unique_id=779417414]
 unique_name_in_owner = true
+z_index = 20
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_b28lu")
 script = ExtResource("7_ny3o0")
 metadata/_edit_lock_ = true
 
@@ -209,6 +214,74 @@ offset_top = 112.0
 offset_right = 1343.0
 offset_bottom = 212.0
 
+[node name="EndContainer" type="PanelContainer" parent="FightUI" unique_id=1628479732]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_62p11")
+
+[node name="MarginContainer" type="MarginContainer" parent="FightUI/EndContainer" unique_id=1947349414]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FightUI/EndContainer/MarginContainer" unique_id=615208163]
+layout_mode = 2
+
+[node name="Spacer4" type="Control" parent="FightUI/EndContainer/MarginContainer/VBoxContainer" unique_id=866969532]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EndLabel" type="Label" parent="FightUI/EndContainer/MarginContainer/VBoxContainer" unique_id=1433314293]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 150
+text = "You Win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="FightUI/EndContainer/MarginContainer/VBoxContainer" unique_id=1100375810]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FightUI/EndContainer/MarginContainer/VBoxContainer" unique_id=1125011670]
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer4" type="Control" parent="FightUI/EndContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1204602790]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RestartButton" type="Button" parent="FightUI/EndContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=318615782]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Restart"
+
+[node name="Spacer3" type="Control" parent="FightUI/EndContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=229034313]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MenuButton" type="Button" parent="FightUI/EndContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=570054053]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Main Menu"
+
+[node name="Spacer2" type="Control" parent="FightUI/EndContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1679239123]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Spacer2" type="Control" parent="FightUI/EndContainer/MarginContainer/VBoxContainer" unique_id=1926119118]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="StateChart" type="Node" parent="." unique_id=553309202]
 unique_name_in_owner = true
 script = ExtResource("10_dsfgu")
@@ -247,6 +320,13 @@ metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 script = ExtResource("14_6ogfw")
 to = NodePath("../../Attack")
 event = &"OnMothChoseAttack"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnGameEnded" type="Node" parent="StateChart/CompoundState/MothTurn/ChoosingAction" unique_id=1742251003]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../GameEnd")
+event = &"OnGameEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
@@ -335,6 +415,13 @@ event = &"OnMothTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
+[node name="OnGameEnded" type="Node" parent="StateChart/CompoundState/MothTurn" unique_id=1367917574]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../GameEnd")
+event = &"OnGameEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
 [node name="ThreatTurn" type="Node" parent="StateChart/CompoundState" unique_id=1464793538]
 script = ExtResource("11_vdykp")
 initial_state = NodePath("ChoosingAttack")
@@ -365,6 +452,13 @@ event = &"OnThreatTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
+[node name="OnGameEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn/ChoosingAttack" unique_id=446305977]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../../GameEnd")
+event = &"OnGameEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
 [node name="Stomp" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=937128868]
 script = ExtResource("12_6ogfw")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
@@ -386,6 +480,16 @@ to = NodePath("../../../MothTurn")
 event = &"OnThreatTurnEnded"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="OnGameEnded" type="Node" parent="StateChart/CompoundState/ThreatTurn" unique_id=70108019]
+script = ExtResource("14_6ogfw")
+to = NodePath("../../GameEnd")
+event = &"OnGameEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="GameEnd" type="Node" parent="StateChart/CompoundState" unique_id=530285790]
+script = ExtResource("12_6ogfw")
 
 [node name="AttackFireMoth" type="CPUParticles2D" parent="." unique_id=1860892088]
 unique_name_in_owner = true
@@ -518,6 +622,8 @@ angular_velocity_max = 30.0
 scale_amount_min = 0.1
 scale_amount_max = 0.3
 
+[connection signal="pressed" from="FightUI/EndContainer/MarginContainer/VBoxContainer/HBoxContainer/RestartButton" to="FightUI" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="FightUI/EndContainer/MarginContainer/VBoxContainer/HBoxContainer/MenuButton" to="FightUI" method="_on_menu_button_pressed"]
 [connection signal="state_exited" from="StateChart/CompoundState/MothTurn" to="." method="_on_moth_turn_state_exited"]
 [connection signal="state_entered" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_entered"]
 [connection signal="state_exited" from="StateChart/CompoundState/MothTurn/ChoosingAction" to="." method="_on_choosing_action_state_exited"]
@@ -532,3 +638,4 @@ scale_amount_max = 0.3
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/ChoosingAttack" to="." method="_on_threat_choosing_attack_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/Stomp" to="." method="_on_threat_stomp_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/ThreatTurn/Fire" to="." method="_on_threat_fire_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/GameEnd" to="." method="_on_game_end_state_entered"]

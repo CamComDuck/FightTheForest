@@ -18,9 +18,13 @@ signal onTweenFinished()
 @onready var threatFireTracker:HBoxContainer = %ThreatFireTracker as HBoxContainer
 
 @onready var fireIcon:PackedScene = preload("res://icons/FireIcon.tscn")
+@onready var titleScene:PackedScene = load("res://title/title.tscn")
 
 @onready var labelVertical:Texture2D = preload("res://UI/labelVertical.png")
 @onready var attackVertical:Texture2D = preload("res://UI/attackVertical.png")
+
+@onready var endContainer:PanelContainer = %EndContainer as PanelContainer
+@onready var endLabel:Label = %EndLabel as Label
 
 const transition := Tween.TRANS_BACK
 const moveAmount := 60.0
@@ -33,6 +37,7 @@ var upPositionStart : Vector2
 var currentTween : Tween
 
 func _ready():
+	endContainer.visible = false
 	leftPositionStart = leftControl.position
 	rightPositionStart = rightControl.position
 	upPositionStart = upControl.position
@@ -169,3 +174,20 @@ func transitionOutLabels(isStart: bool = false) -> void:
 
 	await currentTween.finished
 	onTweenFinished.emit()
+
+
+func onGameEnd(isWin: bool) -> void:
+	if isWin:
+		endLabel.text = "You Win!"
+	else:
+		endLabel.text = "You Lose!"
+
+	endContainer.visible = true
+
+
+func _on_restart_button_pressed() -> void:
+	get_tree().reload_current_scene()
+
+
+func _on_menu_button_pressed() -> void:
+	get_tree().change_scene_to_packed(titleScene)

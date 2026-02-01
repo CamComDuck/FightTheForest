@@ -12,7 +12,7 @@ wait_time = 2.0
 
 [node name="ParticlesLeft" type="CPUParticles2D" parent="." unique_id=989654790]
 unique_name_in_owner = true
-z_index = 10
+z_index = 100
 z_as_relative = false
 position = Vector2(90, 540)
 emitting = false
@@ -30,7 +30,7 @@ scale_amount_max = 0.15
 
 [node name="ParticlesRight" type="CPUParticles2D" parent="." unique_id=546880106]
 unique_name_in_owner = true
-z_index = 10
+z_index = 100
 z_as_relative = false
 position = Vector2(1830, 540)
 emitting = false
@@ -48,7 +48,7 @@ scale_amount_max = 0.15
 
 [node name="ParticlesUp" type="CPUParticles2D" parent="." unique_id=649125053]
 unique_name_in_owner = true
-z_index = 10
+z_index = 100
 z_as_relative = false
 position = Vector2(960, 90)
 emitting = false

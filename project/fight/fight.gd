@@ -371,15 +371,8 @@ func _on_threat_fire_state_entered() -> void:
 
 
 func checkGameEnded() -> void:
-	if moth.getHealth() <= 0: # lose fight
-		sounds.PlaySound("Lose")
-		print("you lose!")
-		get_tree().quit()
-
-	if threat.getHealth() <= 0: # win fight
-		sounds.PlaySound("Win")
-		print("you win!")
-		get_tree().quit()
+	if moth.getHealth() <= 0 or threat.getHealth() <= 0:
+		stateChart.send_event("OnGameEnded")
 
 
 func _on_moth_turn_state_exited() -> void:
@@ -388,3 +381,25 @@ func _on_moth_turn_state_exited() -> void:
 
 func _on_threat_turn_state_exited() -> void:
 	checkGameEnded()
+
+
+func _on_game_end_state_entered() -> void:
+	fightUI.transitionOutLabels()
+
+	if GlobalInfo.usingKeyboard:
+		if keybinds.is_connected("onDirectionChosen", onActionChosen):
+			keybinds.disconnect("onDirectionChosen", onActionChosen)
+
+	else:
+		if faceTracking.is_connected("onDirectionChosen", onActionChosen):
+			faceTracking.disconnect("onDirectionChosen", onActionChosen)
+		faceTracking.isListening = false
+
+
+	if moth.getHealth() <= 0: # lose fight
+		sounds.PlaySound("Lose")
+		fightUI.onGameEnd(false)
+
+	if threat.getHealth() <= 0: # win fight
+		sounds.PlaySound("Win")
+		fightUI.onGameEnd(true)
