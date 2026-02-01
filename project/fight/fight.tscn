@@ -18,11 +18,13 @@
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="14_6ogfw"]
 [ext_resource type="Texture2D" uid="uid://ca20i36bffw6g" path="res://icons/spit.png" id="17_simbi"]
 [ext_resource type="Texture2D" uid="uid://d1772pwrja6l" path="res://icons/fire.png" id="17_v46jh"]
+[ext_resource type="Texture2D" uid="uid://b1a5j18oqem13" path="res://icons/miss.png" id="18_5rwek"]
 
 [node name="Fight" type="Node2D" unique_id=2011946084]
 script = ExtResource("1_0cvpa")
 
 [node name="StateChartDebugger" parent="." unique_id=599595517 instance=ExtResource("1_6ogfw")]
+visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -30,6 +32,7 @@ offset_right = 500.0
 offset_bottom = 500.0
 grow_horizontal = 1
 grow_vertical = 1
+enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="Keybinds" parent="." unique_id=393991047 instance=ExtResource("2_vdykp")]
@@ -391,6 +394,48 @@ angular_velocity_min = -30.0
 angular_velocity_max = 30.0
 scale_amount_min = 0.1
 scale_amount_max = 0.3
+
+[node name="MissOnMoth" type="CPUParticles2D" parent="." unique_id=97458528]
+unique_name_in_owner = true
+z_index = 3
+position = Vector2(592, 498)
+emitting = false
+amount = 1
+texture = ExtResource("18_5rwek")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.1
+randomness = 0.66
+emission_shape = 1
+emission_sphere_radius = 44.45
+direction = Vector2(0, -1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1000.0
+initial_velocity_max = 1200.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+
+[node name="MissOnThreat" type="CPUParticles2D" parent="." unique_id=1673564937]
+unique_name_in_owner = true
+z_index = 3
+position = Vector2(1424, 498)
+emitting = false
+amount = 1
+texture = ExtResource("18_5rwek")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.1
+randomness = 0.66
+emission_shape = 1
+emission_sphere_radius = 44.45
+direction = Vector2(0, -1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1000.0
+initial_velocity_max = 1200.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
 
 [node name="AttackFireThreat" type="CPUParticles2D" parent="." unique_id=2041461517]
 unique_name_in_owner = true

@@ -13,6 +13,9 @@ extends Node2D
 @onready var mothBurnParticles:CPUParticles2D = %MothBurning as CPUParticles2D
 @onready var threatBurnParticles:CPUParticles2D = %ThreatBurning as CPUParticles2D
 
+@onready var missOnMothParticles:CPUParticles2D = %MissOnMoth as CPUParticles2D
+@onready var missOnThreatParticles:CPUParticles2D = %MissOnThreat as CPUParticles2D
+
 const onMothChoseEat := "OnMothChoseEat"
 const onMothChoseMask := "OnMothChoseMask"
 const onMothChoseAttack := "OnMothChoseAttack"
@@ -31,6 +34,15 @@ var isThreatTurnSkipped := false
 var isMothTurnSkipped := false
 
 var isUsingKeyboard := true
+
+const defaultMissChance := .1
+
+var spinMissChance := .99
+var spitMissChance := .99
+var wrapMissChance := .99
+
+var stompMissChance := .99
+var fireMissChance := .99
 
 func _ready() -> void:
 	randomize()
@@ -160,33 +172,51 @@ func _on_spin_state_entered() -> void: # one hit
 	moth.startSpinAnim()
 	await moth.onTweenFinished
 
-	incrementThreatHealth(-3)
-	await fightUI.onTweenFinished
+	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
+	if randomNum <= spinMissChance: # missed
+		missOnThreatParticles.emitting = true
+		await missOnThreatParticles.finished
+
+	else: # hit
+		incrementThreatHealth(-3)
+		await fightUI.onTweenFinished
 
 	stateChart.send_event(onMothTurnEnded)
 
 
 func _on_spit_state_entered() -> void: # burn
-	threat.incrementBurnRounds(2)
-	fightUI.addFireThreat(2)
-
 	attackFireMothParticles.emitting = true
 	await attackFireMothParticles.finished
+
+	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
+	if randomNum <= spitMissChance: # missed
+		missOnThreatParticles.emitting = true
+		await missOnThreatParticles.finished
+
+	else: # hit
+		threat.incrementBurnRounds(2)
+		fightUI.addFireThreat(2)
 
 	stateChart.send_event(onMothTurnEnded)
 
 
 func _on_wrap_state_entered() -> void: # tangle
-	isThreatTurnSkipped = true
-
 	moth.startWrapAnim(threat.position)
 	await moth.onTweenFinished
 
-	threat.startStuckAnim(true)
-	await threat.onTweenFinished
+	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
+	if randomNum <= wrapMissChance: # missed
+		missOnThreatParticles.emitting = true
+		await missOnThreatParticles.finished
 
-	incrementThreatHealth(-1)
-	await fightUI.onTweenFinished
+	else: # hit
+		isThreatTurnSkipped = true
+
+		threat.startStuckAnim(true)
+		await threat.onTweenFinished
+
+		incrementThreatHealth(-1)
+		await fightUI.onTweenFinished
 
 	stateChart.send_event(onMothTurnEnded)
 
@@ -225,17 +255,32 @@ func _on_threat_stomp_state_entered() -> void:
 	threat.startStompAnim(moth.position)
 	await threat.onTweenFinished
 
-	incrementMothHealth(-2)
-	await fightUI.onTweenFinished
+	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
+	if randomNum <= stompMissChance: # missed
+		missOnMothParticles.emitting = true
+		await missOnMothParticles.finished
+
+	else: # hit
+		incrementMothHealth(-2)
+		await fightUI.onTweenFinished
+
 	stateChart.send_event(onThreatTurnEnded)
 
 
 func _on_threat_fire_state_entered() -> void:
-	moth.incrementBurnRounds(2)
-	fightUI.addFireMoth(2)
-
 	attackFireThreatParticles.emitting = true
 	await attackFireThreatParticles.finished
+
+	var randomNum = randf_range(0, 1) # 0 to 1 inclusive
+	if randomNum <= fireMissChance: # missed
+		missOnMothParticles.emitting = true
+		await missOnMothParticles.finished
+
+	else: # hit
+		moth.incrementBurnRounds(2)
+		fightUI.addFireMoth(2)
+
+	
 
 	stateChart.send_event(onThreatTurnEnded)
 
