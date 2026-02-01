@@ -19,6 +19,9 @@ signal onTweenFinished()
 
 @onready var fireIcon:PackedScene = preload("res://icons/FireIcon.tscn")
 
+@onready var labelVertical:Texture2D = preload("res://UI/labelVertical.png")
+@onready var attackVertical:Texture2D = preload("res://UI/attackVertical.png")
+
 const transition := Tween.TRANS_BACK
 const moveAmount := 60.0
 const normDuration := .5
@@ -102,10 +105,18 @@ func getVerticalText(hText: String) -> String:
 	return vText.left(vText.length() - 1)
 
 
-func setControlLabels(leftText: String, rightText: String, upText: String) -> void:
+func setControlLabels(leftText: String, rightText: String, upText: String, isAttack: bool) -> void:
 	leftControlLabel.text = getVerticalText(leftText).to_upper()
 	rightControlLabel.text = getVerticalText(rightText).to_upper()
 	upControlLabel.text = upText.to_upper()
+
+	if isAttack:
+		leftControl.texture = attackVertical
+		rightControl.texture = attackVertical
+		
+	else:
+		leftControl.texture = labelVertical
+		rightControl.texture = labelVertical
 
 
 func transitionInLabels() -> void:

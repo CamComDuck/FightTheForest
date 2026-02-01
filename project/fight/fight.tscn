@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bcasm2qhk108q" path="res://fight/background.png" id="1_wldmm"]
 [ext_resource type="PackedScene" uid="uid://ubmipsi74xrh" path="res://input/keybinds.tscn" id="2_vdykp"]
 [ext_resource type="Texture2D" uid="uid://c2umoqnrswm6j" path="res://UI/labelVertical.png" id="2_yw3gg"]
-[ext_resource type="Texture2D" uid="uid://degurbvxsw5mf" path="res://UI/labelHorizontal.png" id="3_1ybsv"]
 [ext_resource type="Theme" uid="uid://c1ideykdfrqst" path="res://UI/primaryTheme.tres" id="3_b28lu"]
 [ext_resource type="PackedScene" uid="uid://b5chibe38txew" path="res://input/FaceTracking.tscn" id="4_0nyhb"]
 [ext_resource type="PackedScene" uid="uid://3uylcggns17x" path="res://threat/threat.tscn" id="4_4wrhi"]
@@ -14,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://deysuaw8favcb" path="res://UI/button wider hover.png" id="6_7xocg"]
 [ext_resource type="Script" uid="uid://njl4pxmtonj1" path="res://fight/ui.gd" id="7_ny3o0"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="10_dsfgu"]
+[ext_resource type="Texture2D" uid="uid://c66b3oxrwxlvh" path="res://UI/attackHorizontal.png" id="11_0nyhb"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="11_vdykp"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="12_6ogfw"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="14_6ogfw"]
@@ -137,7 +137,7 @@ offset_top = -150.0
 offset_right = 1120.0
 offset_bottom = -30.0
 size_flags_horizontal = 4
-texture = ExtResource("3_1ybsv")
+texture = ExtResource("11_0nyhb")
 stretch_mode = 4
 
 [node name="CenterContainer" type="CenterContainer" parent="FightUI/UpControl" unique_id=1405261684]

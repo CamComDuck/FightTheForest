@@ -71,8 +71,8 @@ func onActionChosen(direction: Vector2) -> void:
 		elif direction.x == 0 and direction.y > 0: # up -> attack
 			stateChart.send_event(onMothChoseAttack)
 
-	else:
-		print(str(direction) + " isnt a valid action direction")
+	# else:
+	# 	print(str(direction) + " isnt a valid action direction")
 
 
 func onAttackChosen(direction: Vector2) -> void:
@@ -94,8 +94,8 @@ func onAttackChosen(direction: Vector2) -> void:
 		elif direction.x == 0 and direction.y > 0: # up -> wrap
 			stateChart.send_event(onMothChoseWrap)
 	
-	else:
-		print(str(direction) + " isnt a valid attack direction")
+	# else:
+	# 	print(str(direction) + " isnt a valid attack direction")
 
 
 func incrementThreatHealth(inc: int) -> void:
@@ -109,7 +109,7 @@ func incrementMothHealth(inc: int) -> void:
 
 
 func _on_choosing_action_state_entered() -> void:
-	fightUI.setControlLabels("Eat", "Mask", "Attack")
+	fightUI.setControlLabels("Eat", "Mask", "Attack", false)
 
 	if moth.isBurning():
 		mothBurnParticles.emitting = true
@@ -170,7 +170,7 @@ func _on_mask_state_entered() -> void:
 
 
 func _on_choosing_attack_state_entered() -> void:
-	fightUI.setControlLabels("Spin", "Spit", "Wrap")
+	fightUI.setControlLabels("Spin", "Spit", "Wrap", true)
 
 	if not fightUI.isTweenRunning():
 		fightUI.transitionInLabels()
