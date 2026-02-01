@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://b5chibe38txew"]
+
+[ext_resource type="Script" uid="uid://c8nwk8m80feud" path="res://input/faceTracking.gd" id="1_gfkqc"]
+[ext_resource type="Texture2D" uid="uid://4rfoglc0qkal" path="res://input/star_fragment_white.png" id="2_kpw1c"]
+
+[node name="FaceTracking" type="Node2D" unique_id=1878358397]
+script = ExtResource("1_gfkqc")
+
+[node name="Timer" type="Timer" parent="." unique_id=1739463164]
+unique_name_in_owner = true
+wait_time = 2.0
+
+[node name="ParticlesLeft" type="CPUParticles2D" parent="." unique_id=989654790]
+unique_name_in_owner = true
+z_index = 10
+z_as_relative = false
+position = Vector2(90, 540)
+emitting = false
+texture = ExtResource("2_kpw1c")
+emission_shape = 6
+emission_ring_inner_radius = 0.8
+emission_ring_radius = 1.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 0.05
+scale_amount_max = 0.15
+
+[node name="ParticlesRight" type="CPUParticles2D" parent="." unique_id=546880106]
+unique_name_in_owner = true
+z_index = 10
+z_as_relative = false
+position = Vector2(1830, 540)
+emitting = false
+texture = ExtResource("2_kpw1c")
+emission_shape = 6
+emission_ring_inner_radius = 0.8
+emission_ring_radius = 1.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 0.05
+scale_amount_max = 0.15
+
+[node name="ParticlesUp" type="CPUParticles2D" parent="." unique_id=649125053]
+unique_name_in_owner = true
+z_index = 10
+z_as_relative = false
+position = Vector2(960, 90)
+emitting = false
+texture = ExtResource("2_kpw1c")
+emission_shape = 6
+emission_ring_inner_radius = 0.8
+emission_ring_radius = 1.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 0.05
+scale_amount_max = 0.15
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

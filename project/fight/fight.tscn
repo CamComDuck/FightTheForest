@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c2umoqnrswm6j" path="res://UI/labelVertical.png" id="2_yw3gg"]
 [ext_resource type="Texture2D" uid="uid://degurbvxsw5mf" path="res://UI/labelHorizontal.png" id="3_1ybsv"]
 [ext_resource type="Theme" uid="uid://c1ideykdfrqst" path="res://UI/primaryTheme.tres" id="3_b28lu"]
+[ext_resource type="PackedScene" uid="uid://b5chibe38txew" path="res://input/FaceTracking.tscn" id="4_0nyhb"]
 [ext_resource type="PackedScene" uid="uid://3uylcggns17x" path="res://threat/threat.tscn" id="4_4wrhi"]
 [ext_resource type="Texture2D" uid="uid://c77amhgf26gaa" path="res://UI/button wider clicked.png" id="5_akaej"]
 [ext_resource type="Texture2D" uid="uid://deysuaw8favcb" path="res://UI/button wider hover.png" id="6_7xocg"]
@@ -36,6 +37,9 @@ enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="Keybinds" parent="." unique_id=393991047 instance=ExtResource("2_vdykp")]
+unique_name_in_owner = true
+
+[node name="FaceTracking" parent="." unique_id=1878358397 instance=ExtResource("4_0nyhb")]
 unique_name_in_owner = true
 
 [node name="Background" type="Sprite2D" parent="." unique_id=674374200]

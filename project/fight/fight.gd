@@ -1,9 +1,11 @@
 class_name Fight
 extends Node2D
 
+@onready var keybinds: Keybinds = %Keybinds as Keybinds
+@onready var faceTracking: FaceTracking = %FaceTracking as FaceTracking
+
 @onready var moth: Moth = %Moth as Moth
 @onready var threat: Threat = %Threat as Threat
-@onready var keybinds: Keybinds = %Keybinds as Keybinds
 @onready var stateChart:StateChart = %StateChart as StateChart
 @onready var fightUI:FightUI = %FightUI as FightUI
 
@@ -33,7 +35,7 @@ const onThreatTurnEnded := "OnThreatTurnEnded"
 var isThreatTurnSkipped := false
 var isMothTurnSkipped := false
 
-var isUsingKeyboard := true
+var isUsingKeyboard := false
 
 const defaultMissChance := .3
 
@@ -69,6 +71,9 @@ func onActionChosen(direction: Vector2) -> void:
 		elif direction.x == 0 and direction.y > 0: # up -> attack
 			stateChart.send_event(onMothChoseAttack)
 
+	else:
+		print(str(direction) + " isnt a valid action direction")
+
 
 func onAttackChosen(direction: Vector2) -> void:
 	if direction != Vector2.ZERO and direction != Vector2(0, -1):
@@ -76,6 +81,7 @@ func onAttackChosen(direction: Vector2) -> void:
 		if not fightUI.isTweenRunning():
 			fightUI.transitionOutLabels()
 			await fightUI.onTweenFinished
+
 		else:
 			await fightUI.onTweenFinished
 
@@ -87,6 +93,9 @@ func onAttackChosen(direction: Vector2) -> void:
 
 		elif direction.x == 0 and direction.y > 0: # up -> wrap
 			stateChart.send_event(onMothChoseWrap)
+	
+	else:
+		print(str(direction) + " isnt a valid attack direction")
 
 
 func incrementThreatHealth(inc: int) -> void:
@@ -125,12 +134,22 @@ func _on_choosing_action_state_entered() -> void:
 	if isUsingKeyboard:
 		if not keybinds.is_connected("onDirectionChosen", onActionChosen):
 			keybinds.connect("onDirectionChosen", onActionChosen)
+	
+	else:
+		if not faceTracking.is_connected("onDirectionChosen", onActionChosen):
+			faceTracking.connect("onDirectionChosen", onActionChosen)
+			faceTracking.isListening = true
 
 
 func _on_choosing_action_state_exited() -> void:
 	if isUsingKeyboard:
 		if keybinds.is_connected("onDirectionChosen", onActionChosen):
 			keybinds.disconnect("onDirectionChosen", onActionChosen)
+
+	else:
+		if faceTracking.is_connected("onDirectionChosen", onActionChosen):
+			faceTracking.disconnect("onDirectionChosen", onActionChosen)
+			faceTracking.isListening = false
 
 
 func _on_eat_state_entered() -> void:
@@ -161,11 +180,19 @@ func _on_choosing_attack_state_entered() -> void:
 
 	if isUsingKeyboard:
 		keybinds.connect("onDirectionChosen", onAttackChosen)
+	
+	else:
+		faceTracking.connect("onDirectionChosen", onAttackChosen)
+		faceTracking.isListening = true
 
 
 func _on_choosing_attack_state_exited() -> void:
 	if isUsingKeyboard:
 		keybinds.disconnect("onDirectionChosen", onAttackChosen)
+
+	else:
+		faceTracking.disconnect("onDirectionChosen", onAttackChosen)
+		faceTracking.isListening = false
 
 
 func _on_spin_state_entered() -> void: # one hit
