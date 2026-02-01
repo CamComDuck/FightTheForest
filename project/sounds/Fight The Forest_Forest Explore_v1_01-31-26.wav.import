@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cx0ka5k8ob05l"
+path="res://.godot/imported/Fight The Forest_Forest Explore_v1_01-31-26.wav-0ef17d6540ad9557bd4b3870e06e1807.sample"
+
+[deps]
+
+source_file="res://sounds/Fight The Forest_Forest Explore_v1_01-31-26.wav"
+dest_files=["res://.godot/imported/Fight The Forest_Forest Explore_v1_01-31-26.wav-0ef17d6540ad9557bd4b3870e06e1807.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
